@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const ReviewForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    review: "",
-  });
+  const { t } = useTranslation();
+
+  const [formData, setFormData] = useState({ name: "", review: "" });
   const [errors, setErrors] = useState({ name: "", review: "" });
   const [submitted, setSubmitted] = useState(false);
 
@@ -16,8 +16,8 @@ const ReviewForm = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Ismingizni kiriting";
-    if (!formData.review.trim()) newErrors.review = "Sharhingizni yozing";
+    if (!formData.name.trim()) newErrors.name = t("reviewForm.errors.name");
+    if (!formData.review.trim()) newErrors.review = t("reviewForm.errors.review");
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -26,7 +26,7 @@ const ReviewForm = () => {
     e.preventDefault();
 
     if (!validateForm()) {
-      toast.error("Iltimos, barcha maydonlarni to‘ldiring.", {
+      toast.error(t("reviewForm.errors.fillAll"), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -40,13 +40,13 @@ const ReviewForm = () => {
     }
 
     try {
-      // Simulate backend submission (replace with actual API call in production)
       console.log("Sharh:", formData);
 
       setSubmitted(true);
       setFormData({ name: "", review: "" });
       setErrors({ name: "", review: "" });
-      toast.success("Sharhingiz qabul qilindi", {
+
+      toast.success(t("reviewForm.success"), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -57,7 +57,7 @@ const ReviewForm = () => {
         className: "bg-green-50 text-green-700 font-medium text-sm rounded-lg",
       });
     } catch (error) {
-      toast.error("Sharh yuborishda xatolik yuz berdi. Qayta urinib ko‘ring.", {
+      toast.error(t("reviewForm.error"), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -74,7 +74,7 @@ const ReviewForm = () => {
     <section className="py-16 bg-white">
       <div className="max-w-2xl mx-auto px-6">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
-          Sharh qoldirishingiz mumkin!
+          {t("reviewForm.title")}
         </h2>
 
         <form
@@ -83,38 +83,42 @@ const ReviewForm = () => {
         >
           <div>
             <label className="block text-gray-700 font-medium mb-2">
-              Ismingiz
+              {t("reviewForm.nameLabel")}
             </label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Ismingizni kiriting"
+              placeholder={t("reviewForm.namePlaceholder")}
               className={`w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none ${
                 errors.name ? "border-red-500" : "border-gray-300"
               }`}
               required
             />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
           </div>
 
           <div>
             <label className="block text-gray-700 font-medium mb-2">
-              Sharhingiz
+              {t("reviewForm.reviewLabel")}
             </label>
             <textarea
               name="review"
               value={formData.review}
               onChange={handleChange}
-              placeholder="Fikringizni yozing..."
+              placeholder={t("reviewForm.reviewPlaceholder")}
               rows="4"
               className={`w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none ${
                 errors.review ? "border-red-500" : "border-gray-300"
               }`}
               required
             ></textarea>
-            {errors.review && <p className="text-red-500 text-sm mt-1">{errors.review}</p>}
+            {errors.review && (
+              <p className="text-red-500 text-sm mt-1">{errors.review}</p>
+            )}
           </div>
 
           <button
@@ -122,7 +126,7 @@ const ReviewForm = () => {
             className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition"
             disabled={submitted}
           >
-            Yuborish
+            {t("reviewForm.submit")}
           </button>
         </form>
       </div>

@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Context } from "../context/Context";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Checkout = () => {
+  const { t } = useTranslation();
   const { cart, placeOrder, currentUser, clearCart } = useContext(Context);
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -16,11 +18,11 @@ const Checkout = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!form.fullName) newErrors.fullName = "To‘liq ism kiritilishi shart";
+    if (!form.fullName) newErrors.fullName = t("checkout.errors.fullName");
     if (!form.phone || !/^\+998\d{9}$/.test(form.phone)) {
-      newErrors.phone = "Telefon raqami +998 bilan boshlanib, 9 ta raqamdan iborat bo‘lishi kerak";
+      newErrors.phone = t("checkout.errors.phone");
     }
-    if (!form.address) newErrors.address = "Manzil kiritilishi shart";
+    if (!form.address) newErrors.address = t("checkout.errors.address");
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -28,7 +30,7 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!currentUser) {
-      toast.warn("Buyurtma berish uchun tizimga kiring", {
+      toast.warn(t("checkout.noUser"), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -55,7 +57,7 @@ const Checkout = () => {
       };
       placeOrder(order);
       clearCart();
-      toast.success("Buyurtma muvaffaqiyatli joylashtirildi", {
+      toast.success(t("checkout.success"), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -67,7 +69,7 @@ const Checkout = () => {
       });
       navigate("/orders");
     } catch (error) {
-      toast.error("Buyurtma joylashtirishda xatolik yuz berdi. Qayta urinib ko‘ring.", {
+      toast.error(t("checkout.error"), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -87,13 +89,13 @@ const Checkout = () => {
 
   return (
     <section className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <h2 className="text-xl sm:text-2xl font-bold mb-6">Buyurtma berish</h2>
+      <h2 className="text-xl sm:text-2xl font-bold mb-6">{t("checkout.title")}</h2>
       {cart.length === 0 ? (
-        <p className="text-center text-gray-500">Savat bo‘sh</p>
+        <p className="text-center text-gray-500">{t("checkout.emptyCart")}</p>
       ) : (
         <form onSubmit={handleSubmit} className="grid gap-4 bg-white shadow-lg p-6 rounded-lg">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">To‘liq ism</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("checkout.fullName")}</label>
             <input
               type="text"
               name="fullName"
@@ -106,7 +108,7 @@ const Checkout = () => {
             {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Telefon raqam</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("checkout.phone")}</label>
             <input
               type="tel"
               name="phone"
@@ -119,7 +121,7 @@ const Checkout = () => {
             {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Manzil</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("checkout.address")}</label>
             <input
               type="text"
               name="address"
@@ -132,23 +134,24 @@ const Checkout = () => {
             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">To‘lov usuli</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("checkout.paymentType")}</label>
             <select
               name="paymentType"
               value={form.paymentType}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-300"
             >
-              <option value="delivery">Naqd pul (haydovchiga)</option>
-              <option value="payme">Payme</option>
-              <option value="click">Click</option>
+              <option value="delivery">{t("checkout.paymentOptions.delivery")}</option>
+              <option value="payme">{t("checkout.paymentOptions.payme")}</option>
+              <option value="click">{t("checkout.paymentOptions.click")}</option>
             </select>
           </div>
           <button
             type="submit"
             className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+            aria-label={t("checkout.submitAria")}
           >
-            Buyurtma berish
+            {t("checkout.submit")}
           </button>
         </form>
       )}

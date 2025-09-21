@@ -1,0 +1,133 @@
+{
+  "home": "Главная",
+  "categories": "Категории",
+  "about": "О нас",
+  "contact": "Контакты",
+  "profile": "Мой профиль",
+  "orders": "Заказы",
+  "logout": "Выйти",
+  "chooseLanguage": "Выберите язык:",
+  "hero": {
+    "title": "MultiMarket",
+    "subtitle": "Все электрические и сантехнические товары — в одном месте!",
+    "description": "Удобный поиск, быстрая доставка и надежные продавцы.",
+    "button": "Подробнее",
+    "buttonAriaLabel": "Узнайте больше о MultiMarket",
+    "imageAlt": "Изображение электрических и сантехнических товаров"
+  },
+  "bestSeller": {
+    "title": "Самые популярные товары",
+    "fetchError": "Ошибка при получении данных!",
+    "fetchErrorToast": "Ошибка при загрузке товаров. Попробуйте снова.",
+    "productAlt": "Изображение товара {{title}}",
+    "currency": "сум",
+    "addToCart": "Добавить в корзину",
+    "addToCartAria": "Добавить товар {{title}} в корзину",
+    "addToCartSuccess": "{{title}} добавлен в корзину",
+    "addToCartError": "Ошибка при добавлении товара в корзину."
+  },
+  "category": {
+    "title": "Новинки по категориям",
+    "fetchError": "Ошибка при получении данных!",
+    "fetchErrorToast": "Ошибка при загрузке категорий. Попробуйте снова.",
+    "productAlt": "Изображение товара {{title}}",
+    "currency": "сум",
+    "addToCart": "Добавить в корзину",
+    "addToCartAria": "Добавить товар {{title}} в корзину",
+    "addToCartSuccess": "{{title}} добавлен в корзину",
+    "addToCartError": "Ошибка при добавлении товара в корзину."
+  },
+  "box": {
+    "noFeatures": "На данный момент функции отсутствуют.",
+    "iconAria": "Иконка функции {{title}}",
+    "learnMore": "Подробнее",
+    "learnMoreAria": "Узнать больше о {{title}}"
+  },
+  "cart": {
+    "title": "Ваша корзина ({{count}})",
+    "emptyCart": "Корзина пуста ({{count}})",
+    "returnHome": "Вернуться на главную",
+    "returnHomeAria": "Вернуться на главную страницу",
+    "clearCart": "Очистить корзину",
+    "clearCartAria": "Очистить корзину",
+    "productAlt": "Изображение товара {{title}}",
+    "currency": "сум",
+    "decreaseQuantityAria": "Уменьшить количество {{title}}",
+    "increaseQuantityAria": "Увеличить количество {{title}}",
+    "removeItemAria": "Удалить {{title}} из корзины",
+    "removeSuccess": "{{title}} удален из корзины",
+    "quantityUpdated": "Количество {{title}} обновлено",
+    "clearSuccess": "Корзина очищена",
+    "summaryTitle": "Итог заказа",
+    "subtotal": "Общая сумма товаров",
+    "discount": "Скидка {{percentage}}%",
+    "total": "Итоговая сумма",
+    "discountOpportunity": "Вы можете получить скидку!",
+    "discountMessage": "Купите еще на {{remaining}} сум и получите скидку {{percentage}}%",
+    "checkout": "Оформить заказ",
+    "checkoutAria": "Оформить заказ"
+  },
+  "checkout": {
+    "title": "Оформить заказ",
+    "emptyCart": "Корзина пуста",
+    "fullName": "Полное имя",
+    "phone": "Номер телефона",
+    "address": "Адрес",
+    "paymentType": "Способ оплаты",
+    "paymentOptions": {
+      "delivery": "Наличные (курьеру)",
+      "payme": "Payme",
+      "click": "Click"
+    },
+    "errors": {
+      "fullName": "Полное имя обязательно",
+      "phone": "Номер телефона должен начинаться с +998 и содержать 9 цифр",
+      "address": "Адрес обязателен"
+    },
+    "noUser": "Войдите в систему для оформления заказа",
+    "success": "Заказ успешно оформлен",
+    "error": "Ошибка при оформлении заказа. Попробуйте снова.",
+    "submit": "Оформить заказ",
+    "submitAria": "Завершить оформление заказа"
+  },
+  "login": {
+    "title": "Вход",
+    "email": "Электронная почта",
+    "emailPlaceholder": "Электронная почта",
+    "password": "Пароль",
+    "passwordPlaceholder": "Пароль",
+    "login": "Войти",
+    "loginAria": "Войти в систему",
+    "noAccount": "Нет аккаунта?",
+    "register": "Зарегистрироваться",
+    "errors": {
+      "email": "Электронная почта обязательна",
+      "password": "Пароль обязателен",
+      "fillAllFields": "Пожалуйста, заполните все поля.",
+      "invalidCredentials": "Неверный адрес электронной почты или пароль. Попробуйте снова.",
+      "general": "Ошибка при входе в систему. Попробуйте снова."
+    }
+  },
+  "testimonials": {
+    "title": "Отзывы",
+    "highlight": "клиентов",
+    "prev": "Предыдущий отзыв",
+    "next": "Следующий отзыв",
+    "goTo": "Перейти к отзыву"
+  },
+  "reviewForm": {
+    "title": "Вы можете оставить отзыв!",
+    "nameLabel": "Ваше имя",
+    "namePlaceholder": "Введите ваше имя",
+    "reviewLabel": "Ваш отзыв",
+    "reviewPlaceholder": "Напишите ваш отзыв...",
+    "submit": "Отправить",
+    "errors": {
+      "name": "Пожалуйста, введите ваше имя",
+      "review": "Пожалуйста, напишите отзыв",
+      "fillAll": "Пожалуйста, заполните все поля."
+    },
+    "success": "Ваш отзыв успешно принят",
+    "error": "Ошибка при отправке отзыва. Попробуйте снова."
+  }
+}

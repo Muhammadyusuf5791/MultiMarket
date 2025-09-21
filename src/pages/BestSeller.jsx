@@ -4,8 +4,10 @@ import Data from "../assets/Data";
 import { SlBasket } from "react-icons/sl";
 import { Context } from "../context/Context";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const BestSeller = () => {
+  const { t } = useTranslation();
   const [category, setCategory] = useState([]);
   const [error, setError] = useState(null);
   const { addToCart } = useContext(Context);
@@ -19,8 +21,8 @@ const BestSeller = () => {
       })
       .catch((err) => {
         console.error(err);
-        setError("Ma'lumotni olishda xatolik yuz berdi!");
-        toast.error("Mahsulotlarni yuklashda xatolik yuz berdi. Qayta urinib ko‘ring.", {
+        setError(t("bestSeller.fetchError"));
+        toast.error(t("bestSeller.fetchErrorToast"), {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -36,7 +38,7 @@ const BestSeller = () => {
   const handleAddToCart = (item) => {
     try {
       addToCart(item);
-      toast.success(`${item.title} savatga qo‘shildi`, {
+      toast.success(t("bestSeller.addToCartSuccess", { title: item.title }), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -48,7 +50,7 @@ const BestSeller = () => {
       });
     } catch (error) {
       console.error(error);
-      toast.error("Mahsulotni savatga qo‘shishda xatolik yuz berdi.", {
+      toast.error(t("bestSeller.addToCartError"), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -66,7 +68,7 @@ const BestSeller = () => {
   return (
     <section className="p-[40px] pb-0">
       <h1 className="pb-10 sm:pb-12 md:pb-16 text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
-        Eng ko'p xarid qilinayotgan mahsulotlar
+        {t("bestSeller.title")}
       </h1>
 
       <div className="w-full flex justify-between gap-[40px] overflow-x-auto scrollbar-hide pb-[40px]">
@@ -76,22 +78,22 @@ const BestSeller = () => {
             className="w-[250px] h-[390px] bg-gray-50 rounded-xl flex-shrink-0 shadow-xl"
           >
             <div className="w-full h-[200px] bg-gray-100 flex justify-center p-[10px] rounded-lg">
-              <img src={item.image} alt={item.title} className="object-contain" />
+              <img src={item.image} alt={t("bestSeller.productAlt", { title: item.title })} className="object-contain" />
             </div>
 
             <h1 className="text-lg font-semibold p-[10px]">{item.title}</h1>
             <p className="pt-[50px] pl-[10px] font-bold text-blue-500 text-xl">
-              {item.price} so'm
+              {item.price} {t("bestSeller.currency")}
             </p>
 
             {/* 🛒 Savatga qo‘shish tugmasi */}
             <button
               onClick={() => handleAddToCart(item)}
               className="w-full h-[44px] bg-blue-600 text-white mt-[20px] rounded-lg relative overflow-hidden group"
-              aria-label={`Savatga qo'shish ${item.title}`}
+              aria-label={t("bestSeller.addToCartAria", { title: item.title })}
             >
               <span className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0">
-                Savatga qo'shish
+                {t("bestSeller.addToCart")}
               </span>
               <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100">
                 <SlBasket size={20} />

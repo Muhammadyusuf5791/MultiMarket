@@ -1,0 +1,133 @@
+{
+  "home": "Home",
+  "categories": "Categories",
+  "about": "About us",
+  "contact": "Contact",
+  "profile": "My profile",
+  "orders": "Orders",
+  "logout": "Logout",
+  "chooseLanguage": "Choose language:",
+  "hero": {
+    "title": "MultiMarket",
+    "subtitle": "All electrical and plumbing products — in one place!",
+    "description": "Easy search, fast delivery, and reliable sellers.",
+    "button": "Learn More",
+    "buttonAriaLabel": "Learn more about MultiMarket",
+    "imageAlt": "Image of electrical and plumbing products"
+  },
+  "bestSeller": {
+    "title": "Best Selling Products",
+    "fetchError": "Error fetching data!",
+    "fetchErrorToast": "Error loading products. Please try again.",
+    "productAlt": "Image of product {{title}}",
+    "currency": "UZS",
+    "addToCart": "Add to Cart",
+    "addToCartAria": "Add {{title}} to cart",
+    "addToCartSuccess": "{{title}} added to cart",
+    "addToCartError": "Error adding product to cart."
+  },
+  "category": {
+    "title": "Latest by Categories",
+    "fetchError": "Error fetching data!",
+    "fetchErrorToast": "Error loading categories. Please try again.",
+    "productAlt": "Image of product {{title}}",
+    "currency": "UZS",
+    "addToCart": "Add to Cart",
+    "addToCartAria": "Add {{title}} to cart",
+    "addToCartSuccess": "{{title}} added to cart",
+    "addToCartError": "Error adding product to cart."
+  },
+  "box": {
+    "noFeatures": "No features available at the moment.",
+    "iconAria": "Icon for {{title}} feature",
+    "learnMore": "Learn More",
+    "learnMoreAria": "Learn more about {{title}}"
+  },
+  "cart": {
+    "title": "Your Cart ({{count}})",
+    "emptyCart": "Cart is empty ({{count}})",
+    "returnHome": "Return to Home",
+    "returnHomeAria": "Return to homepage",
+    "clearCart": "Clear Cart",
+    "clearCartAria": "Clear the cart",
+    "productAlt": "Image of product {{title}}",
+    "currency": "UZS",
+    "decreaseQuantityAria": "Decrease quantity of {{title}}",
+    "increaseQuantityAria": "Increase quantity of {{title}}",
+    "removeItemAria": "Remove {{title}} from cart",
+    "removeSuccess": "{{title}} removed from cart",
+    "quantityUpdated": "{{title}} quantity updated",
+    "clearSuccess": "Cart cleared",
+    "summaryTitle": "Order Summary",
+    "subtotal": "Subtotal",
+    "discount": "{{percentage}}% Discount",
+    "total": "Total Amount",
+    "discountOpportunity": "You can unlock a discount!",
+    "discountMessage": "Spend {{remaining}} UZS more to get {{percentage}}% off",
+    "checkout": "Proceed to Checkout",
+    "checkoutAria": "Proceed to checkout"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "emptyCart": "Cart is empty",
+    "fullName": "Full Name",
+    "phone": "Phone Number",
+    "address": "Address",
+    "paymentType": "Payment Method",
+    "paymentOptions": {
+      "delivery": "Cash on Delivery",
+      "payme": "Payme",
+      "click": "Click"
+    },
+    "errors": {
+      "fullName": "Full name is required",
+      "phone": "Phone number must start with +998 and contain 9 digits",
+      "address": "Address is required"
+    },
+    "noUser": "Please log in to place an order",
+    "success": "Order placed successfully",
+    "error": "Error placing order. Please try again.",
+    "submit": "Place Order",
+    "submitAria": "Complete the order"
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "Password",
+    "login": "Login",
+    "loginAria": "Sign in to your account",
+    "noAccount": "Don't have an account?",
+    "register": "Register",
+    "errors": {
+      "email": "Email is required",
+      "password": "Password is required",
+      "fillAllFields": "Please fill in all fields.",
+      "invalidCredentials": "Invalid email or password. Please try again.",
+      "general": "Error logging in. Please try again."
+    }
+  },
+  "testimonials": {
+    "title": "Customer",
+    "highlight": "reviews",
+    "prev": "Previous testimonial",
+    "next": "Next testimonial",
+    "goTo": "Go to testimonial"
+  },
+  "reviewForm": {
+    "title": "You can leave a review!",
+    "nameLabel": "Your name",
+    "namePlaceholder": "Enter your name",
+    "reviewLabel": "Your review",
+    "reviewPlaceholder": "Write your feedback...",
+    "submit": "Submit",
+    "errors": {
+      "name": "Please enter your name",
+      "review": "Please write your review",
+      "fillAll": "Please fill in all fields."
+    },
+    "success": "Your review has been submitted",
+    "error": "An error occurred while submitting. Please try again."
+  }
+}

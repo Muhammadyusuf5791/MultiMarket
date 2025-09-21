@@ -120,7 +120,7 @@ const Kategoriyalar = () => {
             ))
           ) : (
             <p className="col-span-full text-center text-gray-500 text-sm sm:text-base">
-              Hech narsa topilmadi 😔
+              Hech narsa topilmadi
             </p>
           )}
         </div>

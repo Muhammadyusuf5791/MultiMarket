@@ -1,0 +1,133 @@
+{
+  "home": "Bosh sahifa",
+  "categories": "Kategoriyalar",
+  "about": "Biz haqimizda",
+  "contact": "Aloqa",
+  "profile": "Mening profilim",
+  "orders": "Buyurtmalar",
+  "logout": "Chiqish",
+  "chooseLanguage": "Tilni tanlang:",
+  "hero": {
+    "title": "MultiMarket",
+    "subtitle": "Barcha elektr va santexnika mahsulotlari — bir joyda!",
+    "description": "Oson qidiruv, tezkor yetkazib berish va ishonchli sotuvchilar bilan.",
+    "button": "Ko'proq",
+    "buttonAriaLabel": "MultiMarket haqida ko'proq bilib oling",
+    "imageAlt": "Elektr va santexnika mahsulotlari tasviri"
+  },
+  "bestSeller": {
+    "title": "Eng ko'p xarid qilinayotgan mahsulotlar",
+    "fetchError": "Ma'lumotni olishda xatolik yuz berdi!",
+    "fetchErrorToast": "Mahsulotlarni yuklashda xatolik yuz berdi. Qayta urinib ko‘ring.",
+    "productAlt": "{{title}} mahsuloti tasviri",
+    "currency": "so'm",
+    "addToCart": "Savatga qo'shish",
+    "addToCartAria": "{{title}} mahsulotini savatga qo'shish",
+    "addToCartSuccess": "{{title}} savatga qo'shildi",
+    "addToCartError": "Mahsulotni savatga qo'shishda xatolik yuz berdi."
+  },
+  "category": {
+    "title": "Kategoriyalar bo'yicha eng so'ngilari",
+    "fetchError": "Ma'lumotni olishda xatolik yuz berdi!",
+    "fetchErrorToast": "Kategoriyalarni yuklashda xatolik yuz berdi. Qayta urinib ko‘ring.",
+    "productAlt": "{{title}} mahsuloti tasviri",
+    "currency": "so'm",
+    "addToCart": "Savatga qo'shish",
+    "addToCartAria": "{{title}} mahsulotini savatga qo'shish",
+    "addToCartSuccess": "{{title}} savatga qo'shildi",
+    "addToCartError": "Mahsulotni savatga qo'shishda xatolik yuz berdi."
+  },
+  "box": {
+    "noFeatures": "Hozirda xususiyatlar mavjud emas.",
+    "iconAria": "{{title}} xususiyati ikonkasi",
+    "learnMore": "Batafsil",
+    "learnMoreAria": "{{title}} haqida ko'proq ma'lumot"
+  },
+  "cart": {
+    "title": "Savatingizda ({{count}})",
+    "emptyCart": "Savat bo'sh ({{count}})",
+    "returnHome": "Bosh sahifaga qaytish",
+    "returnHomeAria": "Bosh sahifaga qaytish",
+    "clearCart": "Barchasini o'chirish",
+    "clearCartAria": "Savatni tozalash",
+    "productAlt": "{{title}} mahsuloti tasviri",
+    "currency": "so'm",
+    "decreaseQuantityAria": "{{title}} miqdorini kamaytirish",
+    "increaseQuantityAria": "{{title}} miqdorini oshirish",
+    "removeItemAria": "{{title}} mahsulotini savatdan o'chirish",
+    "removeSuccess": "{{title}} savatdan o‘chirildi",
+    "quantityUpdated": "{{title}} miqdori yangilandi",
+    "clearSuccess": "Savat tozalandi",
+    "summaryTitle": "Buyurtma xulosasi",
+    "subtotal": "Mahsulotlar jami",
+    "discount": "{{percentage}}% chegirma",
+    "total": "To'lov miqdori",
+    "discountOpportunity": "Chegirma olishingiz mumkin!",
+    "discountMessage": "Yana {{remaining}} so'm xarid qiling va {{percentage}}% chegirma oling",
+    "checkout": "Buyurtma berish",
+    "checkoutAria": "Buyurtmani yakunlash"
+  },
+  "checkout": {
+    "title": "Buyurtma berish",
+    "emptyCart": "Savat bo‘sh",
+    "fullName": "To‘liq ism",
+    "phone": "Telefon raqam",
+    "address": "Manzil",
+    "paymentType": "To‘lov usuli",
+    "paymentOptions": {
+      "delivery": "Naqd pul (haydovchiga)",
+      "payme": "Payme",
+      "click": "Click"
+    },
+    "errors": {
+      "fullName": "To‘liq ism kiritilishi shart",
+      "phone": "Telefon raqami +998 bilan boshlanib, 9 ta raqamdan iborat bo‘lishi kerak",
+      "address": "Manzil kiritilishi shart"
+    },
+    "noUser": "Buyurtma berish uchun tizimga kiring",
+    "success": "Buyurtma muvaffaqiyatli joylashtirildi",
+    "error": "Buyurtma joylashtirishda xatolik yuz berdi. Qayta urinib ko‘ring.",
+    "submit": "Buyurtma berish",
+    "submitAria": "Buyurtmani yakunlash"
+  },
+  "login": {
+    "title": "Kirish",
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "password": "Parol",
+    "passwordPlaceholder": "Parol",
+    "login": "Kirish",
+    "loginAria": "Tizimga kirish",
+    "noAccount": "Akkountingiz yo‘qmi?",
+    "register": "Ro‘yxatdan o‘tish",
+    "errors": {
+      "email": "Email kiritilishi shart",
+      "password": "Parol kiritilishi shart",
+      "fillAllFields": "Iltimos, barcha maydonlarni to‘ldiring.",
+      "invalidCredentials": "Noto‘g‘ri email yoki parol. Qayta urinib ko‘ring.",
+      "general": "Tizimga kirishda xatolik yuz berdi. Qayta urinib ko‘ring."
+    }
+  },
+  "testimonials": {
+    "title": "Mijozlar",
+    "highlight": "sharhlari",
+    "prev": "Oldingi sharh",
+    "next": "Keyingi sharh",
+    "goTo": "Sharhga o'tish"
+  },
+  "reviewForm": {
+    "title": "Sharh qoldirishingiz mumkin!",
+    "nameLabel": "Ismingiz",
+    "namePlaceholder": "Ismingizni kiriting",
+    "reviewLabel": "Sharhingiz",
+    "reviewPlaceholder": "Fikringizni yozing...",
+    "submit": "Yuborish",
+    "errors": {
+      "name": "Iltimos, ismingizni kiriting",
+      "review": "Iltimos, sharhingizni yozing",
+      "fillAll": "Iltimos, barcha maydonlarni to‘ldiring."
+    },
+    "success": "Sharhingiz muvaffaqiyatli qabul qilindi",
+    "error": "Sharh yuborishda xatolik yuz berdi. Qayta urinib ko‘ring."
+  }
+}
