@@ -4,6 +4,7 @@ import img4 from "../assets/img4.png";
 import img5 from "../assets/img5.png";
 import img6 from "../assets/img6.png";
 import img7 from "../assets/img7.png";
+import { FaTruck, FaCheckCircle, FaCreditCard, FaStar } from "react-icons/fa";
 
 const Data = [
   {
@@ -74,25 +75,25 @@ const Data = [
     features: [
       {
         id: 11,
-        icon: "🚚",
+        icon: <FaTruck size={32} className="text-blue-600" />,
         title: "Tezkor yetkazib berish",
         desc: "Buyurtmangiz qisqa fursatda eshigingizgacha yetkaziladi.",
       },
       {
         id: 12,
-        icon: "✅",
+        icon: <FaCheckCircle size={32} className="text-blue-600" />,
         title: "Ishonchli sotuvchilar",
         desc: "Faqat tekshirilgan va ishonchli hamkorlardan mahsulotlar.",
       },
       {
         id: 13,
-        icon: "💳",
+        icon: <FaCreditCard size={32} className="text-blue-600" />,
         title: "Xavfsiz to'lov",
         desc: "Tranzaksiyalar himoyalangan to'lov tizimlari orqali amalga oshiriladi.",
       },
       {
         id: 14,
-        icon: "⭐",
+        icon: <FaStar size={32} className="text-blue-600" />,
         title: "Kafolatlangan sifat",
         desc: "Har bir mahsulot sifat kafolatlari bilan ta'minlanadi.",
       },
@@ -100,17 +101,17 @@ const Data = [
     testimonials: [
       {
         id: 15,
-        text: "MultiMarket'dan topganimcha boshqa joyda topmadim. Juda qulay!",
+        text: "MultiMarket'dan topganimcha boshqa joyda topmadim. Juda qulay va ishonchli!",
         author: "— Azizbek",
       },
       {
         id: 16,
-        text: "Narxlar yaxshi, yetkazib berish tez.",
+        text: "Narxlar juda yaxshi, yetkazib berish esa tez va muammosiz.",
         author: "— Muhammadyusuf",
       },
       {
         id: 17,
-        text: "Sifatli mahsulotlar va ishonchli sotuvchilar!",
+        text: "Sifatli mahsulotlar va ishonchli sotuvchilar! Har doim shu yerdan xarid qilaman.",
         author: "— Jamshid",
       },
     ],

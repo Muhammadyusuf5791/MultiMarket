@@ -3,13 +3,12 @@ import axios from "axios";
 import Data from "../assets/Data";
 import { SlBasket } from "react-icons/sl";
 import { Context } from "../context/Context";
+import { toast } from "react-toastify";
 
 const BestSeller = () => {
   const [category, setCategory] = useState([]);
   const [error, setError] = useState(null);
-
-  const { addToCart } = useContext(Context); // 🛒 Contextdan funksiya
-
+  const { addToCart } = useContext(Context);
   const bestSeller = Data[0].bestSeller;
 
   useEffect(() => {
@@ -21,10 +20,48 @@ const BestSeller = () => {
       .catch((err) => {
         console.error(err);
         setError("Ma'lumotni olishda xatolik yuz berdi!");
+        toast.error("Mahsulotlarni yuklashda xatolik yuz berdi. Qayta urinib ko‘ring.", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "light",
+          className: "bg-red-50 text-red-700 font-medium text-sm rounded-lg",
+        });
       });
   }, []);
 
-  if (error) return <p>{error}</p>;
+  const handleAddToCart = (item) => {
+    try {
+      addToCart(item);
+      toast.success(`${item.title} savatga qo‘shildi`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+        className: "bg-green-50 text-green-700 font-medium text-sm rounded-lg",
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Mahsulotni savatga qo‘shishda xatolik yuz berdi.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+        className: "bg-red-50 text-red-700 font-medium text-sm rounded-lg",
+      });
+    }
+  };
+
+  if (error) return null; // Toast handles the error display
 
   return (
     <section className="p-[40px] pb-0">
@@ -39,7 +76,7 @@ const BestSeller = () => {
             className="w-[250px] h-[390px] bg-gray-50 rounded-xl flex-shrink-0 shadow-xl"
           >
             <div className="w-full h-[200px] bg-gray-100 flex justify-center p-[10px] rounded-lg">
-              <img src={item.image} alt={item.title} />
+              <img src={item.image} alt={item.title} className="object-contain" />
             </div>
 
             <h1 className="text-lg font-semibold p-[10px]">{item.title}</h1>
@@ -49,8 +86,9 @@ const BestSeller = () => {
 
             {/* 🛒 Savatga qo‘shish tugmasi */}
             <button
-              onClick={() => addToCart(item)}
+              onClick={() => handleAddToCart(item)}
               className="w-full h-[44px] bg-blue-600 text-white mt-[20px] rounded-lg relative overflow-hidden group"
+              aria-label={`Savatga qo'shish ${item.title}`}
             >
               <span className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0">
                 Savatga qo'shish

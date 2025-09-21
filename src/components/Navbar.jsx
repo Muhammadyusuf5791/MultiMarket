@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { IoLocationOutline, IoChevronDownOutline } from "react-icons/io5";
 import { HiMenu, HiX } from "react-icons/hi";
+import { Link, NavLink } from "react-router-dom";
 import uzb from "../assets/logo1.png";
 import rus from "../assets/logo2.png";
 import eng from "../assets/logo3.png";
@@ -8,13 +8,11 @@ import profil_icon from "../assets/profile_icon.png";
 import cart_icon from "../assets/cart_icon.png";
 import search_icon from "../assets/search_icon.png";
 import logo4 from "../assets/logo4.png";
-import { Link, NavLink } from "react-router-dom";
 import { Context } from "../context/Context";
-import CartTotal from "../pages/CartTotal";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false); // language dropdown
-  const [menuOpen, setMenuOpen] = useState(false); // mobile menu
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState({ img: uzb, text: "UZ" });
 
   const { count } = useContext(Context);
@@ -27,49 +25,6 @@ const Navbar = () => {
 
   return (
     <section className="border-b">
-      {/* Top bar */}
-      <section className="w-full flex flex-col md:flex-row md:justify-between items-center px-4 md:px-10 py-2 bg-gray-100 gap-2 text-sm">
-        <div className="flex items-center gap-5">
-          <p className="flex items-center gap-1 cursor-pointer">
-            <IoLocationOutline className="text-lg" /> Namangan
-            <IoChevronDownOutline className="text-lg" />
-          </p>
-          <p className="cursor-pointer">Sotuv punktlari</p>
-        </div>
-
-        <div className="flex items-center gap-5">
-          <p className="cursor-pointer">Savol-javob</p>
-
-          {/* Language Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setOpen(!open)}
-              className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1 rounded-md cursor-pointer"
-            >
-              <img src={selected.img} alt="" width="20" /> {selected.text}
-              <IoChevronDownOutline className="text-gray-600" />
-            </button>
-
-            {open && (
-              <ul className="absolute top-full right-0 bg-white border border-gray-200 rounded-md mt-2 shadow-lg w-24 z-10">
-                {languages.map((lang, i) => (
-                  <li
-                    key={i}
-                    onClick={() => {
-                      setSelected(lang);
-                      setOpen(false);
-                    }}
-                    className="flex items-center gap-2 px-3 py-1 hover:bg-gray-100 cursor-pointer"
-                  >
-                    <img src={lang.img} alt="" width="20" /> {lang.text}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      </section>
-
       {/* Header */}
       <header className="w-full flex items-center justify-between px-4 md:px-10 py-3">
         {/* Logo */}
@@ -113,10 +68,9 @@ const Navbar = () => {
 
         {/* Actions */}
         <div className="flex items-center gap-4 md:gap-5">
-          <img src={search_icon} alt="search" className="w-5 cursor-pointer" />
-
-          {/* Desktop Profile & Cart */}
+          {/* Profile, Cart & Language */}
           <div className="hidden md:flex items-center gap-4">
+            {/* Profile dropdown */}
             <div className="relative group">
               <img
                 src={profil_icon}
@@ -126,17 +80,20 @@ const Navbar = () => {
               <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                 <ul className="flex flex-col text-sm">
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    Mening profilim
+                    <Link to="/profile">Mening profilim</Link>
                   </li>
+
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    Buyurtmalar
+                    <Link to="/orders">Buyurtmalar</Link>{" "}
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">
-                    Chiqish
+                    <Link to="/login">Chiqish</Link>
                   </li>
                 </ul>
               </div>
             </div>
+
+            {/* Cart */}
             <Link to="/cart">
               <div className="relative cursor-pointer">
                 <img src={cart_icon} alt="cart" className="w-5" />
@@ -145,22 +102,55 @@ const Navbar = () => {
                 </span>
               </div>
             </Link>
+
+            {/* Language dropdown dumaloq (cart yonida) */}
+            <div className="relative">
+              <button
+                onClick={() => setOpen(!open)}
+                className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1 rounded-full cursor-pointer shadow-sm"
+              >
+                <img
+                  src={selected.img}
+                  alt=""
+                  width="20"
+                  className="rounded-full"
+                />
+                {selected.text}
+              </button>
+
+              {open && (
+                <ul className="absolute top-full right-0 bg-white border border-gray-200 rounded-lg mt-2 shadow-lg w-28 z-10">
+                  {languages.map((lang, i) => (
+                    <li
+                      key={i}
+                      onClick={() => {
+                        setSelected(lang);
+                        setOpen(false);
+                      }}
+                      className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 cursor-pointer rounded-md"
+                    >
+                      <img
+                        src={lang.img}
+                        alt=""
+                        width="20"
+                        className="rounded-full"
+                      />
+                      {lang.text}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
 
           {/* Mobile Profile & Cart + Hamburger */}
           <div className="flex md:hidden items-center gap-3">
             <img
               src={profil_icon}
-              alt="cart"
-              className="w-5 sm:w-6 md:w-7 lg:w-8 cursor-pointer"
+              alt="profile"
+              className="w-5 cursor-pointer"
             />
-
-            <img
-              src={cart_icon}
-              alt="cart"
-              className="w-5 sm:w-6 md:w-7 lg:w-8 cursor-pointer"
-            />
-
+            <img src={cart_icon} alt="cart" className="w-5 cursor-pointer" />
             <button className="text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
               {menuOpen ? <HiX /> : <HiMenu />}
             </button>
