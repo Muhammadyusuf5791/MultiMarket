@@ -1,75 +1,87 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const MultiMarkerAbout = () => {
+  const { t, i18n } = useTranslation();
+
+  // Initialize language from localStorage
+  useEffect(() => {
+    const savedLang = localStorage.getItem("selectedLanguage");
+    const lang = savedLang ? JSON.parse(savedLang).text : "uz";
+    i18n.changeLanguage(lang);
+  }, [i18n]);
+
   return (
     <div className="px-6 md:px-12 py-6">
       <div className="text-gray-700 text-base md:text-lg max-w-4xl mx-auto">
         <h4 className="text-xl md:text-2xl font-semibold mb-4">
-          MultiMarket haqida ko'proq ma'lumot
+          {t("aboutMarket.title")}
         </h4>
         <p className="mb-4">
-          MultiMarket — bu elektr va santexnika mahsulotlari uchun yetakchi onlayn platforma bo'lib, mijozlarga yuqori sifatli mahsulotlarni qulay narxlarda taqdim etadi. Bizning maqsadimiz — xaridorlarga o'z ehtiyojlariga mos mahsulotlarni osongina topish va xavfsiz xarid qilish imkoniyatini berish.
+          {t("aboutMarket.description")}
         </p>
         <h5 className="text-lg md:text-xl font-medium mb-3">
-          Nima uchun MultiMarketni tanlash kerak?
+          {t("aboutMarket.whyChooseUs")}
         </h5>
         <ul className="list-disc list-inside mb-6">
           <li>
-            <strong>Keng assortiment:</strong> Elektr jihozlari (rozetkalar, kalitlar, kabellar, chiroqlar) va santexnika mahsulotlari (trubalar, kranlar, dush kabinalari, vannalar) kabi minglab mahsulotlar.
+            <strong>{t("aboutMarket.features.assortment.title")}:</strong>{" "}
+            {t("aboutMarket.features.assortment.description")}
           </li>
           <li>
-            <strong>Ishonchli sotuvchilar:</strong> Faqat tasdiqlangan va sifatli mahsulotlar taqdim etuvchi yetkazib beruvchilar bilan hamkorlik.
+            <strong>{t("aboutMarket.features.suppliers.title")}:</strong>{" "}
+            {t("aboutMarket.features.suppliers.description")}
           </li>
           <li>
-            <strong>Tezkor yetkazib berish:</strong> O'zbekiston, Namangan bo'ylab 1-2 soat ichida yetkazib berish xizmati.
+            <strong>{t("aboutMarket.features.delivery.title")}:</strong>{" "}
+            {t("aboutMarket.features.delivery.description")}
           </li>
           <li>
-            <strong>Oson qidiruv tizimi:</strong> Mahsulotlarni toifalar, brendlar va narxlar bo'yicha filtrlab topish imkoniyati.
+            <strong>{t("aboutMarket.features.search.title")}:</strong>{" "}
+            {t("aboutMarket.features.search.description")}
           </li>
           <li>
-            <strong>24/7 mijozlar xizmati:</strong> Har qanday savol yoki muammolar uchun doimiy qo'llab-quvvatlash.
+            <strong>{t("aboutMarket.features.support.title")}:</strong>{" "}
+            {t("aboutMarket.features.support.description")}
           </li>
           <li>
-            <strong>Aktsiyalar va chegirmalar:</strong> Doimiy ravishda yangilanadigan maxsus takliflar va chegirmalar, shu jumladan 2,000,000 UZS dan yuqori xaridlarga 12% gacha chegirma.
+            <strong>{t("aboutMarket.features.discounts.title")}:</strong>{" "}
+            {t("aboutMarket.features.discounts.description")}
           </li>
         </ul>
         <h5 className="text-lg md:text-xl font-medium mb-3">
-          Bizning mahsulot toifalarimiz
+          {t("aboutMarket.categories.title")}
         </h5>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h6 className="font-semibold">Elektr mahsulotlari:</h6>
+            <h6 className="font-semibold">{t("aboutMarket.categories.electrical.title")}</h6>
             <ul className="list-disc list-inside">
-              <li>Kabellar va simlar</li>
-              <li>Rozetkalar va kalitlar</li>
-              <li>LED chiroqlar va lampalar</li>
-              <li>Elektr panellari va avtomatlar</li>
-              <li>Generatolar va stabilizatorlar</li>
+              {t("aboutMarket.categories.electrical.items", { returnObjects: true }).map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
           </div>
           <div>
-            <h6 className="font-semibold">Santexnika mahsulotlari:</h6>
+            <h6 className="font-semibold">{t("aboutMarket.categories.plumbing.title")}</h6>
             <ul className="list-disc list-inside">
-              <li>Kranlar va smesitellar</li>
-              <li>Trubalar va fittinglar</li>
-              <li>Vannalar va dush kabinalari</li>
-              <li>Unitazlar va rakovinalar</li>
-              <li>Suv isitgichlar va nasoslar</li>
+              {t("aboutMarket.categories.plumbing.items", { returnObjects: true }).map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
           </div>
         </div>
         <p className="mt-6">
-          MultiMarket bilan xarid qilish — bu qulaylik, sifat va ishonch demakdir! Bugun ro'yxatdan o'ting va eng yaxshi takliflarni kashf eting.
+          {t("aboutMarket.footer")}
         </p>
         <button
           className="bg-blue-500 mt-4 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition-all duration-300 ease"
           onClick={() => window.location.href = "/register"}
         >
-          Ro'yxatdan o'tish
+          {t("aboutMarket.registerButton")}
         </button>
       </div>
     </div>
   );
 };
 
-export default React.memo(MultiMarkerAbout)
+export default React.memo(MultiMarkerAbout);

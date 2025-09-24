@@ -67,6 +67,90 @@
     "checkout": "Buyurtma berish",
     "checkoutAria": "Buyurtmani yakunlash"
   },
+  "aboutPage": {
+    "title": "Biz haqimizda",
+    "description": "MultiMarket — elektr, santexnika va boshqa ko'plab sohalar uchun mahsulotlarni bir joyda jamlagan onlayn bozor. Maqsadimiz sizga qulay, tezkor va ishonchli xizmat ko'rsatish.",
+    "whyChooseUs": "Nega bizni tanlashingiz kerak?",
+    "features": {
+      "feature1": "Elektr va santexnika mahsulotlarining keng tanlovi",
+      "feature2": "Tezkor yetkazib berish xizmati",
+      "feature3": "Sifatli va kafolatlangan mahsulotlar",
+      "feature4": "24/7 qo'llab-quvvatlash xizmati"
+    },
+    "contact": "Bog'lanish",
+    "contactAria": "Biz bilan bog'lanish sahifasiga o'tish",
+    "imageAlt": "Biz haqimizda tasvir"
+  },
+  "contactPage": {
+    "title": "Bizning aloqa ma'lumotlari",
+    "address": "Bizning do'kon: Chorsu bozori, Namangan shahri",
+    "enter_name": "Ismingizni kiriting",
+    "enter_email": "Emailingizni kiriting",
+    "enter_message": "Xabaringizni kiriting",
+    "message_sent": "Xabaringiz yuborildi!",
+    "input_placeholder": "Javobingizni yozing...",
+    "send_button": "Yuborish",
+    "no_messages": "Hozircha xabarlar yo'q",
+    "no_backend": "Backend hozircha mavjud emas. Soxta ma'lumotlar ishlatilmoqda.",
+    "mock_admin_response": "Salom! Sizning xabaringizni ko‘rib chiqamiz.",
+    "mock_admin_response_2": "Tez orada javob beramiz!"
+  },
+  "aboutMarket": {
+    "title": "MultiMarket haqida ko'proq ma'lumot",
+    "description": "MultiMarket — bu elektr va santexnika mahsulotlari uchun yetakchi onlayn platforma bo'lib, mijozlarga yuqori sifatli mahsulotlarni qulay narxlarda taqdim etadi. Bizning maqsadimiz — xaridorlarga o'z ehtiyojlariga mos mahsulotlarni osongina topish va xavfsiz xarid qilish imkoniyatini berish.",
+    "whyChooseUs": "Nima uchun MultiMarketni tanlash kerak?",
+    "features": {
+      "assortment": {
+        "title": "Keng assortiment",
+        "description": "Elektr jihozlari (rozetkalar, kalitlar, kabellar, chiroqlar) va santexnika mahsulotlari (trubalar, kranlar, dush kabinalari, vannalar) kabi minglab mahsulotlar."
+      },
+      "suppliers": {
+        "title": "Ishonchli sotuvchilar",
+        "description": "Faqat tasdiqlangan va sifatli mahsulotlar taqdim etuvchi yetkazib beruvchilar bilan hamkorlik."
+      },
+      "delivery": {
+        "title": "Tezkor yetkazib berish",
+        "description": "O'zbekiston, Namangan bo'ylab 1-2 soat ichida yetkazib berish xizmati."
+      },
+      "search": {
+        "title": "Oson qidiruv tizimi",
+        "description": "Mahsulotlarni toifalar, brendlar va narxlar bo'yicha filtrlab topish imkoniyati."
+      },
+      "support": {
+        "title": "24/7 mijozlar xizmati",
+        "description": "Har qanday savol yoki muammolar uchun doimiy qo'llab-quvvatlash."
+      },
+      "discounts": {
+        "title": "Aktsiyalar va chegirmalar",
+        "description": "Doimiy ravishda yangilanadigan maxsus takliflar va chegirmalar, shu jumladan 2,000,000 UZS dan yuqori xaridlarga 12% gacha chegirma."
+      }
+    },
+    "categories": {
+      "title": "Bizning mahsulot toifalarimiz",
+      "electrical": {
+        "title": "Elektr mahsulotlari",
+        "items": [
+          "Kabellar va simlar",
+          "Rozetkalar va kalitlar",
+          "LED chiroqlar va lampalar",
+          "Elektr panellari va avtomatlar",
+          "Generatolar va stabilizatorlar"
+        ]
+      },
+      "plumbing": {
+        "title": "Santexnika mahsulotlari",
+        "items": [
+          "Kranlar va smesitellar",
+          "Trubalar va fittinglar",
+          "Vannalar va dush kabinalari",
+          "Unitazlar va rakovinalar",
+          "Suv isitgichlar va nasoslar"
+        ]
+      }
+    },
+    "footer": "MultiMarket bilan xarid qilish — bu qulaylik, sifat va ishonch demakdir! Bugun ro'yxatdan o'ting va eng yaxshi takliflarni kashf eting.",
+    "registerButton": "Ro'yxatdan o'tish"
+  },
   "checkout": {
     "title": "Buyurtma berish",
     "emptyCart": "Savat bo‘sh",
@@ -108,6 +192,42 @@
       "general": "Tizimga kirishda xatolik yuz berdi. Qayta urinib ko‘ring."
     }
   },
+  "register": {
+    "title": "Ro‘yxatdan o‘tish",
+    "labels": {
+      "fullName": "To‘liq ism",
+      "email": "Email",
+      "password": "Parol",
+      "phone": "Telefon raqam (ixtiyoriy)",
+      "age": "Yosh (ixtiyoriy)"
+    },
+    "placeholders": {
+      "fullName": "Ism familiya",
+      "email": "Email",
+      "password": "Parol",
+      "phone": "+998901234567",
+      "age": "Yoshingiz"
+    },
+    "errors": {
+      "fullName": "To‘liq ism kamida 3 ta belgidan iborat bo‘lishi kerak",
+      "email": "Iltimos, to‘g‘ri email kiriting",
+      "password": "Parol kamida 6 ta belgidan iborat bo‘lishi kerak",
+      "phone": "Telefon raqami +998 bilan boshlanib, 9 ta raqamdan iborat bo‘lishi kerak",
+      "age": "Yosh 18 dan 120 gacha bo‘lishi kerak",
+      "form": "Iltimos, barcha maydonlarni to‘g‘ri to‘ldiring",
+      "emailExists": "Bu email bilan allaqachon ro‘yxatdan o‘tgan!",
+      "generic": "Ro‘yxatdan o‘tishda xatolik yuz berdi. Qayta urinib ko‘ring."
+    },
+    "success": "Ro‘yxatdan o‘tish muvaffaqiyatli",
+    "submitting": "Jarayonda...",
+    "submit": "Ro‘yxatdan o‘tish",
+    "loginPrompt": "Akkauntingiz bormi?",
+    "loginLink": "Kirish"
+  },
+  "navbar": {
+    "logout": "Chiqish",
+    "register": "Ro‘yxatdan o‘tish"
+  },
   "testimonials": {
     "title": "Mijozlar",
     "highlight": "sharhlari",
@@ -129,5 +249,47 @@
     },
     "success": "Sharhingiz muvaffaqiyatli qabul qilindi",
     "error": "Sharh yuborishda xatolik yuz berdi. Qayta urinib ko‘ring."
+  },
+  "categoriesPage": {
+    "all": "Barchasi",
+    "electrical": "Elektr mahsulotlari",
+    "plumbing": "Santexnika mahsulotlari",
+    "searchPlaceholder": "Mahsulot qidirish...",
+    "addToCart": "Savatga qo'shish",
+    "addToCartSuccess": "{title} savatga qo'shildi",
+    "noResults": "Hech narsa topilmadi",
+    "currency": "so'm"
+  },
+  "footer": {
+    "text": "MultiMarket — sizning ishonchli hamkoringiz.",
+    "quickLinks": "Tezkor havolalar",
+    "home": "Bosh sahifa",
+    "categories": "Kategoriyalar",
+    "about": "Biz haqimizda",
+    "contact": "Aloqa",
+    "contactTitle": "Aloqa",
+    "location": "Namangan, O'zbekiston",
+    "phone": "+998 (90) 690 64 44",
+    "email": "multimarket@gmail.com",
+    "socials": "Ijtimoiy tarmoqlar:",
+    "rights": "© 2025 MultiMarket. Barcha huquqlar himoyalangan."
+  },
+  "profilePage": {
+    "notFoundTitle": "Profil topilmadi",
+    "notFoundText": "Iltimos, tizimga kiring.",
+    "login": "Kirish",
+    "myProfile": "Mening profilim",
+    "fullName": "To‘liq ism",
+    "email": "Email",
+    "phone": "Telefon raqam",
+    "phonePlaceholder": "+998901234567",
+    "age": "Yosh",
+    "agePlaceholder": "Yoshingiz",
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda...",
+    "success": "Profil muvaffaqiyatli yangilandi",
+    "error": "Profilni yangilashda xatolik yuz berdi. Qayta urinib ko‘ring.",
+    "phoneError": "Telefon raqami +998 bilan boshlanib, 9 ta raqamdan iborat bo‘lishi kerak",
+    "ageError": "Yosh 18 dan 120 gacha bo‘lishi kerak"
   }
 }

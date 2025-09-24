@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Link, NavLink } from "react-router-dom";
 import uzb from "../assets/logo1.png";
@@ -11,12 +11,36 @@ import { Context } from "../context/Context";
 import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
+  const { t, i18n } = useTranslation(); // Correctly destructure t and i18n
+  const { count, currentUser, setCurrentUser } = useContext(Context);
   const [menuOpen, setMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState({ img: uzb, text: "uz" });
+  const [selected, setSelected] = useState(() => {
+    const savedLang = localStorage.getItem("selectedLanguage");
+    return savedLang ? JSON.parse(savedLang) : { img: uzb, text: "uz" };
+  });
 
-  const { count } = useContext(Context);
-  const { t, i18n } = useTranslation();
+  // Initialize language only on mount
+  useEffect(() => {
+    const savedLang = localStorage.getItem("selectedLanguage");
+    if (savedLang) {
+      const { text } = JSON.parse(savedLang);
+      if (text !== i18n.language) { // Use i18n.language to check current language
+        i18n.changeLanguage(text); // Use i18n directly
+      }
+    }
+    // Debug translations
+    console.log("Navbar translations:", {
+      home: t("home", "Home"),
+      categories: t("categories", "Categories"),
+      about: t("about", "About"),
+      contact: t("contact", "Contact"),
+      profile: t("profile", "My Profile"),
+      orders: t("orders", "Orders"),
+      logout: t("logout", "Logout"),
+      register: t("navbar.register", "Register"),
+    });
+  }, [i18n]); // Depend on i18n to ensure language changes are handled
 
   const languages = [
     { img: uzb, text: "uz" },
@@ -26,36 +50,46 @@ const Navbar = () => {
 
   const handleLanguageChange = (lang) => {
     setSelected(lang);
-    i18n.changeLanguage(lang.text); // Update i18next language
+    i18n.changeLanguage(lang.text);
+    localStorage.setItem("selectedLanguage", JSON.stringify(lang));
     setOpen(false);
     setMenuOpen(false);
   };
 
+  const handleLogout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem("currentUser");
+    setMenuOpen(false);
+  };
+
   const navLinks = [
-    { path: "/", label: t("home") },
-    { path: "/sohalar", label: t("categories") },
-    { path: "/about", label: t("about") },
-    { path: "/contact", label: t("contact") },
+    { path: "/", label: t("home", "Home") },
+    { path: "/sohalar", label: t("categories", "Categories") },
+    { path: "/about", label: t("about", "About") },
+    { path: "/contact", label: t("contact", "Contact") },
   ];
 
-  const profileLinks = [
-    { path: "/profile", label: t("profile") },
-    { path: "/orders", label: t("orders") },
-    { path: "/login", label: t("logout"), className: "text-red-500" },
-  ];
+  const profileLinks = currentUser
+    ? [
+        { path: "/profile", label: t("profile", "My Profile") },
+        { path: "/orders", label: t("orders", "Orders") },
+        { path: "/login", label: t("logout", "Logout"), className: "text-red-500", onClick: handleLogout },
+      ]
+    : [
+        { path: "/profile", label: t("profile", "My Profile") },
+        { path: "/orders", label: t("orders", "Orders") },
+        { path: "/register", label: t("navbar.register", "Register"), className: "text-blue-500" },
+      ];
 
   return (
     <section className="border-b">
-      {/* Header */}
       <header className="w-full flex items-center justify-between px-4 sm:px-6 md:px-10 py-3">
-        {/* Logo */}
         <div className="w-28 sm:w-36 md:w-44 lg:w-48">
           <Link to="/">
             <img src={logo4} alt="logo" className="w-full" />
           </Link>
         </div>
 
-        {/* Desktop nav */}
         <nav className="hidden md:flex gap-6 font-medium text-slate-700">
           {navLinks.map((link, i) => (
             <NavLink
@@ -81,11 +115,8 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* Actions */}
         <div className="flex items-center gap-4 md:gap-5">
-          {/* Desktop actions */}
           <div className="hidden md:flex items-center gap-4">
-            {/* Profile dropdown */}
             <div className="relative group">
               <img
                 src={profil_icon}
@@ -98,6 +129,7 @@ const Navbar = () => {
                     <li
                       key={i}
                       className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${link.className || ""}`}
+                      onClick={link.onClick}
                     >
                       <Link to={link.path}>{link.label}</Link>
                     </li>
@@ -106,7 +138,6 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* Cart */}
             <Link to="/cart">
               <div className="relative cursor-pointer">
                 <img src={cart_icon} alt="cart" className="w-5" />
@@ -116,7 +147,6 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {/* Language dropdown */}
             <div className="relative">
               <button
                 onClick={() => setOpen(!open)}
@@ -153,13 +183,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile Profile & Cart + Hamburger */}
           <div className="flex md:hidden items-center gap-3">
-            <img
-              src={profil_icon}
-              alt="profile"
-              className="w-5 cursor-pointer"
-            />
             <Link to="/cart">
               <div className="relative cursor-pointer">
                 <img src={cart_icon} alt="cart" className="w-5" />
@@ -168,6 +192,18 @@ const Navbar = () => {
                 </span>
               </div>
             </Link>
+            <button
+              className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1 rounded-full cursor-pointer shadow-sm"
+              onClick={() => setOpen(!open)}
+            >
+              <img
+                src={selected.img}
+                alt=""
+                width="18"
+                className="rounded-full"
+              />
+              {selected.text.toUpperCase()}
+            </button>
             <button className="text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
               {menuOpen ? <HiX /> : <HiMenu />}
             </button>
@@ -175,7 +211,32 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Mobile menu */}
+      {open && (
+        <div className="md:hidden bg-white border-t shadow-md py-4">
+          <div className="flex justify-center gap-3">
+            {languages.map((lang, i) => (
+              <button
+                key={i}
+                onClick={() => handleLanguageChange(lang)}
+                className={`flex items-center gap-1 px-3 py-1 border rounded-full text-sm ${
+                  selected.text === lang.text
+                    ? "bg-blue-500 text-white"
+                    : "bg-white text-gray-700"
+                }`}
+              >
+                <img
+                  src={lang.img}
+                  alt={lang.text}
+                  width="18"
+                  className="rounded-full"
+                />
+                {lang.text.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {menuOpen && (
         <div className="md:hidden bg-white border-t shadow-md">
           <nav className="flex flex-col items-center gap-4 py-4 font-medium text-slate-700">
@@ -195,7 +256,10 @@ const Navbar = () => {
               <NavLink
                 key={i}
                 to={link.path}
-                onClick={() => setMenuOpen(false)}
+                onClick={() => {
+                  setMenuOpen(false);
+                  if (link.onClick) link.onClick();
+                }}
                 className={({ isActive }) =>
                   `hover:text-blue-500 ${link.className || ""} ${isActive ? "text-blue-600" : ""}`
                 }
@@ -203,34 +267,6 @@ const Navbar = () => {
                 {link.label}
               </NavLink>
             ))}
-
-            {/* Mobile language selector */}
-            <div className="mt-4">
-              <p className="text-sm text-gray-500 mb-2 text-center">
-                {t("chooseLanguage")}
-              </p>
-              <div className="flex gap-3">
-                {languages.map((lang, i) => (
-                  <button
-                    key={i}
-                    onClick={() => handleLanguageChange(lang)}
-                    className={`flex items-center gap-1 px-3 py-1 border rounded-full text-sm ${
-                      selected.text === lang.text
-                        ? "bg-blue-500 text-white"
-                        : "bg-white text-gray-700"
-                    }`}
-                  >
-                    <img
-                      src={lang.img}
-                      alt={lang.text}
-                      width="18"
-                      className="rounded-full"
-                    />
-                    {lang.text.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-            </div>
           </nav>
         </div>
       )}

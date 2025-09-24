@@ -67,6 +67,90 @@
     "checkout": "Proceed to Checkout",
     "checkoutAria": "Proceed to checkout"
   },
+  "aboutPage": {
+    "title": "About us",
+    "description": "MultiMarket is an online marketplace that brings together products for electrical, plumbing, and many other fields. Our goal is to provide you with convenient, fast, and reliable service.",
+    "whyChooseUs": "Why choose us?",
+    "features": {
+      "feature1": "Wide selection of electrical and plumbing products",
+      "feature2": "Fast delivery service",
+      "feature3": "High-quality and certified products",
+      "feature4": "24/7 customer support"
+    },
+    "contact": "Contact us",
+    "contactAria": "Navigate to the contact page",
+    "imageAlt": "About us image"
+  },
+  "contactPage": {
+    "title": "Our Contact Information",
+    "address": "Our store: Chorsu Market, Namangan city",
+    "enter_name": "Enter your name",
+    "enter_email": "Enter your email",
+    "enter_message": "Enter your message",
+    "message_sent": "Message sent successfully!",
+    "input_placeholder": "Type your response...",
+    "send_button": "Send",
+    "no_messages": "No messages yet",
+    "no_backend": "Backend is not available. Using mock data.",
+    "mock_admin_response": "Hello! We will review your message.",
+    "mock_admin_response_2": "We will respond soon!"
+  },
+  "aboutMarket": {
+    "title": "More About MultiMarket",
+    "description": "MultiMarket is a leading online platform for electrical and plumbing products, offering customers high-quality products at affordable prices. Our goal is to provide buyers with the ability to easily find suitable products and make secure purchases.",
+    "whyChooseUs": "Why Choose MultiMarket?",
+    "features": {
+      "assortment": {
+        "title": "Wide Assortment",
+        "description": "Thousands of products, including electrical appliances (sockets, switches, cables, lights) and plumbing products (pipes, faucets, shower cabins, bathtubs)."
+      },
+      "suppliers": {
+        "title": "Reliable Suppliers",
+        "description": "Collaboration only with verified suppliers providing high-quality products."
+      },
+      "delivery": {
+        "title": "Fast Delivery",
+        "description": "Delivery service across Namangan and Uzbekistan within 1–2 hours."
+      },
+      "search": {
+        "title": "Easy Search System",
+        "description": "Ability to filter products by categories, brands, and prices."
+      },
+      "support": {
+        "title": "24/7 Customer Support",
+        "description": "Constant support for any questions or issues."
+      },
+      "discounts": {
+        "title": "Promotions and Discounts",
+        "description": "Regularly updated special offers and discounts, including up to 12% off on purchases over 2,000,000 UZS."
+      }
+    },
+    "categories": {
+      "title": "Our Product Categories",
+      "electrical": {
+        "title": "Electrical Products",
+        "items": [
+          "Cables and Wires",
+          "Sockets and Switches",
+          "LED Lights and Lamps",
+          "Electrical Panels and Circuit Breakers",
+          "Generators and Stabilizers"
+        ]
+      },
+      "plumbing": {
+        "title": "Plumbing Products",
+        "items": [
+          "Faucets and Mixers",
+          "Pipes and Fittings",
+          "Bathtubs and Shower Cabins",
+          "Toilets and Sinks",
+          "Water Heaters and Pumps"
+        ]
+      }
+    },
+    "footer": "Shopping with MultiMarket means convenience, quality, and trust! Register today and discover the best offers.",
+    "registerButton": "Register"
+  },
   "checkout": {
     "title": "Checkout",
     "emptyCart": "Cart is empty",
@@ -108,6 +192,42 @@
       "general": "Error logging in. Please try again."
     }
   },
+  "register": {
+    "title": "Register",
+    "labels": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "phone": "Phone Number (optional)",
+      "age": "Age (optional)"
+    },
+    "placeholders": {
+      "fullName": "First Last Name",
+      "email": "Email",
+      "password": "Password",
+      "phone": "+998901234567",
+      "age": "Your Age"
+    },
+    "errors": {
+      "fullName": "Full name must be at least 3 characters long",
+      "email": "Please enter a valid email address",
+      "password": "Password must be at least 6 characters long",
+      "phone": "Phone number must start with +998 and contain 9 digits",
+      "age": "Age must be between 18 and 120",
+      "form": "Please fill all fields correctly",
+      "emailExists": "This email is already registered!",
+      "generic": "An error occurred during registration. Please try again."
+    },
+    "success": "Registration successful",
+    "submitting": "Processing...",
+    "submit": "Register",
+    "loginPrompt": "Already have an account?",
+    "loginLink": "Login"
+  },
+  "navbar": {
+    "logout": "Logout",
+    "register": "Register"
+  },
   "testimonials": {
     "title": "Customer",
     "highlight": "reviews",
@@ -129,5 +249,47 @@
     },
     "success": "Your review has been submitted",
     "error": "An error occurred while submitting. Please try again."
+  },
+  "categoriesPage": {
+    "all": "All",
+    "electrical": "Electrical Products",
+    "plumbing": "Plumbing Products",
+    "searchPlaceholder": "Search products...",
+    "addToCart": "Add to Cart",
+    "addToCartSuccess": "{title} added to cart",
+    "noResults": "No results found",
+    "currency": "UZS"
+  }, 
+  "footer": {
+    "text": "MultiMarket — your trusted partner.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "categories": "Categories",
+    "about": "About Us",
+    "contact": "Contact",
+    "contactTitle": "Contact",
+    "location": "Namangan, Uzbekistan",
+    "phone": "+998 (90) 690 64 44",
+    "email": "multimarket@gmail.com",
+    "socials": "Follow us:",
+    "rights": "© 2025 MultiMarket. All rights reserved."
+  },
+  "profilePage": {
+    "notFoundTitle": "Profile not found",
+    "notFoundText": "Please log in.",
+    "login": "Login",
+    "myProfile": "My Profile",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "phonePlaceholder": "+998901234567",
+    "age": "Age",
+    "agePlaceholder": "Your age",
+    "save": "Save",
+    "saving": "Saving...",
+    "success": "Profile updated successfully",
+    "error": "Error updating profile. Please try again.",
+    "phoneError": "Phone number must start with +998 and contain 9 digits",
+    "ageError": "Age must be between 18 and 120"
   }
 }

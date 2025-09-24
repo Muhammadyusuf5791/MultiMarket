@@ -1,21 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { SlBasket } from "react-icons/sl";
-import { toast } from "react-toastify"; // Import toast only
+import { toast } from "react-toastify";
 import Footer from "./Footer";
 import Data from "../assets/Data";
 import { Context } from "../context/Context";
 import Fuse from "fuse.js";
+import { useTranslation } from "react-i18next";
 
 const Kategoriyalar = () => {
+  const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category");
   const [searchTerm, setSearchTerm] = useState("");
   const { addToCart } = useContext(Context);
 
+  // Initialize language from localStorage
+  useEffect(() => {
+    const savedLang = localStorage.getItem("selectedLanguage");
+    const lang = savedLang ? JSON.parse(savedLang).text : "uz";
+    i18n.changeLanguage(lang);
+  }, [i18n]);
+
   const allProducts = Data[0].allProducts;
 
-  // Fuse sozlamalari
+  // Fuse settings
   const fuse = new Fuse(allProducts, {
     keys: ["title", "description"],
     threshold: 0.4,
@@ -33,7 +42,7 @@ const Kategoriyalar = () => {
 
   const handleAddToCart = (item) => {
     addToCart(item);
-    toast.success(`${item.title} savatga qo'shildi`, {
+    toast.success(t("categoriesPagePage.addToCartSuccess", { title: item.title }), {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -56,7 +65,7 @@ const Kategoriyalar = () => {
                 !category ? "bg-blue-600 text-white shadow-md" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               } focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
-              Barchasi
+              {t("categoriesPage.all")}
             </button>
             <button
               onClick={() => setSearchParams({ category: "elektr" })}
@@ -64,7 +73,7 @@ const Kategoriyalar = () => {
                 category === "elektr" ? "bg-blue-600 text-white shadow-md" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               } focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
-              Elektr mahsulotlari
+              {t("categoriesPage.electrical")}
             </button>
             <button
               onClick={() => setSearchParams({ category: "santexnika" })}
@@ -72,13 +81,13 @@ const Kategoriyalar = () => {
                 category === "santexnika" ? "bg-blue-600 text-white shadow-md" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               } focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
-              Santexnika mahsulotlari
+              {t("categoriesPage.plumbing")}
             </button>
           </div>
 
           <input
             type="text"
-            placeholder="Mahsulot qidirish..."
+            placeholder={t("categoriesPage.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm sm:text-base"
@@ -103,16 +112,16 @@ const Kategoriyalar = () => {
                   {item.title}
                 </h1>
                 <p className="pt-10 sm:pt-12 pl-2.5 sm:pl-3 font-bold text-blue-500 text-lg sm:text-xl">
-                  {item.price.toLocaleString()} so'm
+                  {item.price.toLocaleString()} {t("categoriesPage.currency")}
                 </p>
                 <button
                   onClick={() => handleAddToCart(item)}
                   className="w-full h-[44px] bg-blue-600 text-white mt-4 sm:mt-5 rounded-lg relative overflow-hidden group"
                 >
-                  <span className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 text-sm sm:text-base">
-                    Savatga qo'shish
+                  <span className="absolute inset-0 flex items-center justify-center transition-all duration-200 group-hover:opacity-0 text-sm sm:text-base">
+                    {t("categoriesPage.addToCart")}
                   </span>
-                  <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100">
+                  <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-200 group-hover:opacity-100">
                     <SlBasket size={20} />
                   </span>
                 </button>
@@ -120,7 +129,7 @@ const Kategoriyalar = () => {
             ))
           ) : (
             <p className="col-span-full text-center text-gray-500 text-sm sm:text-base">
-              Hech narsa topilmadi
+              {t("categoriesPage.noResults")}
             </p>
           )}
         </div>
