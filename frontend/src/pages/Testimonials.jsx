@@ -6,7 +6,10 @@ import { useTranslation } from "react-i18next";
 const Testimonials = () => {
   const { t } = useTranslation();
   const [current, setCurrent] = useState(0);
-  const testimonials = Data[0].testimonials;
+  
+  // ✅ Data ni CHAQIRISH kerak - bu funksiya!
+  const data = Data();
+  const testimonials = data[0]?.testimonials || [];
 
   const prevSlide = () => {
     setCurrent((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
@@ -22,11 +25,18 @@ const Testimonials = () => {
 
   // Auto-play effect
   useEffect(() => {
+    if (testimonials.length === 0) return; // Agar testimonial bo'lmasa, intervalni ishga tushirma
+    
     const timer = setInterval(() => {
       nextSlide();
     }, 5000); // Cycle every 5 seconds
     return () => clearInterval(timer);
-  }, []);
+  }, [testimonials.length]); // testimonials.length ni dependency ga qo'shish
+
+  // Agar testimonial bo'lmasa, komponentni ko'rsatma
+  if (testimonials.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-16 bg-gray-50 pt-[20px]">
@@ -39,10 +49,10 @@ const Testimonials = () => {
         <div className="relative">
           <div className="bg-white rounded-2xl shadow-md p-8 transition-all duration-500">
             <p className="text-lg italic text-gray-700 mb-4">
-              "{testimonials[current].text}"
+              "{testimonials[current]?.text}"
             </p>
             <span className="block text-sm font-semibold text-gray-500">
-              {testimonials[current].author}
+              {testimonials[current]?.author}
             </span>
           </div>
 

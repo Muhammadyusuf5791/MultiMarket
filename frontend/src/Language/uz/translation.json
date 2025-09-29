@@ -250,7 +250,7 @@
     "success": "Sharhingiz muvaffaqiyatli qabul qilindi",
     "error": "Sharh yuborishda xatolik yuz berdi. Qayta urinib ko‘ring."
   },
-  "categoriesPage": {
+   "categoriesPage": {
     "all": "Barchasi",
     "electrical": "Elektr mahsulotlari",
     "plumbing": "Santexnika mahsulotlari",
@@ -291,5 +291,80 @@
     "error": "Profilni yangilashda xatolik yuz berdi. Qayta urinib ko‘ring.",
     "phoneError": "Telefon raqami +998 bilan boshlanib, 9 ta raqamdan iborat bo‘lishi kerak",
     "ageError": "Yosh 18 dan 120 gacha bo‘lishi kerak"
+  },
+  "ordersPage": {
+    "no_orders_title": "Sizda hali buyurtmalar mavjud emas",
+    "no_orders_description": "Birinchi buyurtma qilish uchun mahsulotlarimiz sahifasiga tashrif buyuring",
+    "no_orders_button": "Mahsulotlar sahifasiga o'tish",
+    "orders_title": "Mening buyurtmalarim",
+    "filter_all": "Hammasi",
+    "filter_pending": "Jarayonda",
+    "filter_driver_assigned": "Yo'lda",
+    "filter_delivered": "Yetkazilgan",
+    "filter_cancelled": "Bekor qilingan",
+    "order_label": "Buyurtma #{{id}}",
+    "payment_failed": "To'lov amalga oshmadi",
+    "status_cancelled": "Bekor qilingan",
+    "status_driver_assigned": "Haydovchiga topshirildi",
+    "status_delivered": "Yetkazib berildi",
+    "status_pending": "Qayta ishlanmoqda",
+    "payment_click": "Click",
+    "payment_payme": "Payme",
+    "payment_delivery_cash": "Naqd pul",
+    "payment_delivery_driver": "Naqd (haydovchiga)",
+    "payment_cod": "COD",
+    "discount_label": "{{percentage}}% Chegirma",
+    "original_price": "Asl narx",
+    "cancel_order_button": "Bekor qilish {{timeLeft}}",
+    "cancel_order_expired": "Bekor qilish muddati tugadi",
+    "track_order_button": "Buyurtmani kuzatish",
+    "total_label": "Jami",
+    "quantity_label": "Miqdori",
+    "cancel_modal_title": "Buyurtmani bekor qilish",
+    "cancel_modal_message": "Haqiqatan ham <0>#{id}</0> raqamli buyurtmani bekor qilmoqchimisiz?",
+    "cancel_modal_note": "Bu amalni qaytarib bo'lmaydi.",
+    "cancel_modal_cancel": "Bekor qilish",
+    "cancel_modal_confirm": "Ha, bekor qilish",
+    "tracking_modal_title": "Buyurtma #{{id}} kuzatish",
+    "tracking_modal_status": "Buyurtma holati",
+    "tracking_modal_tracking_number": "Kuzatuv raqami",
+    "tracking_modal_driver": "Haydovchi",
+    "tracking_modal_driver_phone": "Haydovchi tel",
+    "tracking_modal_estimated_delivery": "Yetkazish vaqti",
+    "tracking_modal_close": "Yopish",
+    "toast_success": "Buyurtma #{{id}} bekor qilindi",
+    "toast_error": "Buyurtmani bekor qilishda xatolik yuz berdi. Qayta urinib ko‘ring.",
+    "currency": "so'm"
+  },
+  "categoriesData": {
+    "uzo_avtamat": "Uzo avtamat 63A",
+    "avtamat_16c": "Avtamat o'chirgich 16C",
+    "schotchik": "Scho'tchik",
+    "traynoy_d25": "Traynoy d-25",
+    "dazmol": "Dazmol",
+    "d32_valf": "D-32 sharli valf plastik"
+  },
+  "featuresData": {
+    "fast_delivery": "Tezkor yetkazib berish",
+    "reliable_sellers": "Ishonchli sotuvchilar",
+    "secure_payment": "Xavfsiz to'lov",
+    "quality_guarantee": "Kafolatlangan sifat",
+    "fast_delivery_desc": "1-2 soat ichida tezkor yetkazib berish xizmati",
+    "reliable_sellers_desc": "Ishonchli va tasdiqlangan sotuvchilar bilan hamkorlik",
+    "secure_payment_desc": "Xavfsiz to'lov tizimlari va kafolatlangan operatsiyalar",
+    "quality_guarantee_desc": "Yuqori sifatli mahsulotlar va kafolat xizmati"
+  },
+  "boxData": {
+    "title": "Bizning Afzalliklarimiz",
+    "noFeatures": "Hozirda xususiyatlar mavjud emas.",
+    "iconAria": "{{title}} xususiyati ikonkasi",
+    "learnMore": "Batafsil",
+    "learnMoreAria": "{{title}} haqida ko'proq ma'lumot",
+    "learnMoreToast": "xizmati haqida batafsil ma'lumot"
+  },
+  "testimonialsData": {
+    "azizbek": "MultiMarket'dan topganimcha boshqa joyda topmadim. Juda qulay va ishonchli!",
+    "muhammad": "Narxlar juda yaxshi, yetkazib berish esa tez va muammosiz.",
+    "jamshid": "Sifatli mahsulotlar va ishonchli sotuvchilar! Har doim shu yerdan xarid qilaman."
   }
 }

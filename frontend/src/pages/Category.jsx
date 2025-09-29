@@ -7,11 +7,14 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
 const Category = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [category, setCategory] = useState([]);
   const [error, setError] = useState(null);
-  const { addToCart } = useContext(Context); // 🛒 Contextdan funksiya olish
-  const category1 = Data[0].category;
+  const { addToCart } = useContext(Context);
+  
+  // ✅ Data ni CHAQIRISH kerak - bu funksiya!
+  const data = Data();
+  const category1 = data?.[0]?.category || [];
 
   useEffect(() => {
     axios
@@ -33,12 +36,20 @@ const Category = () => {
           className: "bg-red-50 text-red-700 font-medium text-sm rounded-lg",
         });
       });
-  }, []);
+  }, [category1, t]);
 
   const handleAddToCart = (item) => {
     try {
       addToCart(item);
-      toast.success(t("category.addToCartSuccess", { title: item.title }), {
+      
+      // ✅ To'g'ri ishlaydigan toast xabari
+      const messages = {
+        uz: `${item.title} savatga qo'shildi`,
+        ru: `${item.title} добавлен в корзину`,
+        en: `${item.title} added to cart`
+      };
+      
+      toast.success(messages[i18n.language] || messages.en, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -63,7 +74,7 @@ const Category = () => {
     }
   };
 
-  if (error) return null; // Toast handles the error display
+  if (error) return null;
 
   return (
     <section className="p-[40px] pb-0">
@@ -75,7 +86,7 @@ const Category = () => {
         {category.map((item) => (
           <div
             key={item.id}
-            className="w-[250px] h-[390px] bg-gray-50 rounded-xl flex-shrink-0 shadow-xl"
+            className="w-[250px] h-[390px] bg-gray-50 rounded-xl flex-shrink-0 shadow-xl flex flex-col"
           >
             <div className="w-full h-[200px] bg-gray-100 flex justify-center p-[10px] rounded-lg">
               <img
@@ -85,24 +96,32 @@ const Category = () => {
               />
             </div>
 
-            <h1 className="text-lg font-semibold p-[10px]">{item.title}</h1>
-            <p className="pt-[50px] pl-[10px] font-bold text-blue-500 text-xl">
-              {item.price} {t("category.currency")}
-            </p>
+            {/* Title qismi - fixed height bilan */}
+            <div className="min-h-[60px] max-h-[60px] overflow-hidden p-[10px]">
+              <h1 className="text-lg font-semibold line-clamp-2 leading-tight">
+                {item.title}
+              </h1>
+            </div>
 
-            {/* 🛒 Savatga qo‘shish tugmasi */}
-            <button
-              onClick={() => handleAddToCart(item)}
-              className="w-full h-[44px] bg-blue-600 text-white mt-[20px] rounded-lg relative overflow-hidden group"
-              aria-label={t("category.addToCartAria", { title: item.title })}
-            >
-              <span className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0">
-                {t("category.addToCart")}
-              </span>
-              <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100">
-                <SlBasket size={20} />
-              </span>
-            </button>
+            {/* Narx va button - fixed joy */}
+            <div className="mt-auto p-[10px]">
+              <p className="font-bold text-blue-500 text-xl mb-5">
+                {item.price} {t("category.currency")}
+              </p>
+
+              <button
+                onClick={() => handleAddToCart(item)}
+                className="w-full h-[44px] bg-blue-600 text-white rounded-lg relative overflow-hidden group"
+                aria-label={t("category.addToCartAria", { title: item.title })}
+              >
+                <span className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0">
+                  {t("category.addToCart")}
+                </span>
+                <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100">
+                  <SlBasket size={20} />
+                </span>
+              </button>
+            </div>
           </div>
         ))}
       </div>
