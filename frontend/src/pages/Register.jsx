@@ -3,6 +3,12 @@ import { useNavigate, Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { 
+  createUserWithEmailAndPassword, 
+  updateProfile 
+} from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { auth, db } from '../firebase';
 
 const Register = () => {
   const { t, i18n } = useTranslation();
@@ -69,34 +75,36 @@ const Register = () => {
 
     setIsSubmitting(true);
     try {
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      const exist = users.find((u) => u.email === form.email);
-      if (exist) {
-        toast.error(t("register.errors.emailExists", "This email is already registered!"), {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "light",
-          className: "bg-red-50 text-red-700 font-medium text-sm rounded-lg",
-        });
-        setErrors({ email: t("register.errors.emailExists", "This email is already registered!") });
-        return;
-      }
+      // Firebase Authentication orqali foydalanuvchi yaratish
+      const userCredential = await createUserWithEmailAndPassword(
+        auth, 
+        form.email, 
+        form.password
+      );
+      
+      const user = userCredential.user;
 
-      const newUser = {
+      // Firebase Auth profilini yangilash
+      await updateProfile(user, {
+        displayName: form.fullName
+      });
+
+      // Firestore'da foydalanuvchi ma'lumotlarini saqlash
+      const userData = {
+        uid: user.uid,
         fullName: form.fullName,
         email: form.email,
-        password: form.password, // In production, hash the password
         phone: form.phone || "",
         age: form.age || "",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
-      users.push(newUser);
-      localStorage.setItem("users", JSON.stringify(users));
-      localStorage.setItem("currentUser", JSON.stringify(newUser));
-      setCurrentUser(newUser);
+
+      await setDoc(doc(db, "users", user.uid), userData);
+
+      // Context va localStorage ga foydalanuvchi ma'lumotlarini saqlash
+      setCurrentUser(userData);
+      localStorage.setItem("currentUser", JSON.stringify(userData));
 
       toast.success(t("register.success", "Registration successful"), {
         position: "top-right",
@@ -108,9 +116,35 @@ const Register = () => {
         theme: "light",
         className: "bg-green-50 text-green-700 font-medium text-sm rounded-lg",
       });
+      
       navigate("/");
     } catch (error) {
-      toast.error(t("register.errors.generic", "An error occurred during registration. Please try again."), {
+      console.error("Registration error:", error);
+      
+      let errorMessage = t("register.errors.generic", "An error occurred during registration. Please try again.");
+      
+      // Firebase xatolarini qayta ishlash
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          errorMessage = t("register.errors.emailExists", "This email is already registered!");
+          setErrors({ email: errorMessage });
+          break;
+        case "auth/invalid-email":
+          errorMessage = t("register.errors.invalidEmail", "Invalid email address");
+          setErrors({ email: errorMessage });
+          break;
+        case "auth/weak-password":
+          errorMessage = t("register.errors.weakPassword", "Password is too weak");
+          setErrors({ password: errorMessage });
+          break;
+        case "auth/network-request-failed":
+          errorMessage = t("register.errors.network", "Network error. Please check your connection");
+          break;
+        default:
+          errorMessage = error.message || errorMessage;
+      }
+
+      toast.error(errorMessage, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,

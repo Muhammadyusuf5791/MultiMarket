@@ -1,17 +1,21 @@
-import React, { useContext } from "react";
+// frontend/src/components/CartTotal.jsx
+import React, { useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GoTrash } from "react-icons/go";
 import { Context } from "../context/Context";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const CartTotal = () => {
   const { t } = useTranslation();
-  const { cart, count, clearCart, increaseQuantity, decreaseQuantity, removeFromCart } =
+  const { currentUser, cart, count, clearCart, increaseQuantity, decreaseQuantity, removeFromCart, setCart } =
     useContext(Context);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  // Chegirma foizlari
+  // Discount thresholds
   const DISCOUNT_THRESHOLDS = [
     { amount: 2000000, discount: 12 },
     { amount: 1000000, discount: 8 },
@@ -29,10 +33,63 @@ const CartTotal = () => {
     theme: "light",
   };
 
-  // Jami summani hisoblash
+  // Load cart from Firestore
+  useEffect(() => {
+    const loadCartFromFirebase = async () => {
+      if (currentUser) {
+        try {
+          console.log('Loading cart for user:', currentUser.uid);
+          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            if (userData.cart && userData.cart.length > 0) {
+              setCart(userData.cart);
+              console.log('Cart loaded from Firestore:', userData.cart);
+            }
+          }
+        } catch (error) {
+          console.error("Error loading cart from Firebase:", error.code, error.message);
+        }
+      }
+    };
+    loadCartFromFirebase();
+  }, [currentUser, setCart]);
+
+  // Save cart to Firestore
+  const saveCartToFirebase = async (updatedCart) => {
+    if (!currentUser) return;
+    try {
+      console.log('Saving cart to Firestore:', updatedCart);
+      const userRef = doc(db, "users", currentUser.uid);
+      await updateDoc(userRef, {
+        cart: updatedCart,
+        updatedAt: new Date().toISOString(),
+      });
+      console.log('Cart saved to Firestore');
+    } catch (error) {
+      console.error("Error saving cart to Firebase:", error.code, error.message);
+      if (error.code === "not-found") {
+        try {
+          await setDoc(doc(db, "users", currentUser.uid), {
+            uid: currentUser.uid,
+            email: currentUser.email,
+            fullName: currentUser.fullName || "",
+            cart: updatedCart,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+          console.log('User document created with cart');
+        } catch (createError) {
+          console.error("Error creating user document:", createError);
+        }
+      }
+    }
+  };
+
+  // Calculate total
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  // Chegirma miqdorini hisoblash
+  // Calculate discount
   const calculateDiscount = (totalAmount) => {
     for (const threshold of DISCOUNT_THRESHOLDS) {
       if (totalAmount >= threshold.amount) {
@@ -45,9 +102,10 @@ const CartTotal = () => {
     return { percentage: 0, amount: 0 };
   };
 
-  // Keyingi chegirma chegarasini aniqlash
+  // Get next discount threshold
   const getNextThreshold = (totalAmount) => {
-    for (const threshold of DISCOUNT_THRESHOLDS.reverse()) {
+    const sortedThresholds = [...DISCOUNT_THRESHOLDS].sort((a, b) => b.amount - a.amount);
+    for (const threshold of sortedThresholds) {
       if (totalAmount < threshold.amount) {
         return threshold;
       }
@@ -59,40 +117,65 @@ const CartTotal = () => {
   const finalTotal = total - discount.amount;
   const nextThreshold = getNextThreshold(total);
 
-  // Handle remove from cart
-  const handleRemoveFromCart = (itemId, title) => {
+  // Handle cart operations
+  const handleRemoveFromCart = async (itemId, title) => {
     removeFromCart(itemId);
+    if (currentUser) {
+      await saveCartToFirebase(cart.filter(item => item.id !== itemId));
+    }
     toast.success(t("cart.removeSuccess", { title }), {
       ...toastConfig,
       className: "bg-green-50 text-green-700 font-medium text-sm rounded-lg",
     });
   };
 
-  // Handle increase quantity
-  const handleIncreaseQuantity = (itemId, title) => {
+  const handleIncreaseQuantity = async (itemId, title) => {
     increaseQuantity(itemId);
+    if (currentUser) {
+      await saveCartToFirebase(cart.map(item =>
+        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      ));
+    }
     toast.success(t("cart.quantityUpdated", { title }), {
       ...toastConfig,
       className: "bg-green-50 text-green-700 font-medium text-sm rounded-lg",
     });
   };
 
-  // Handle decrease quantity
-  const handleDecreaseQuantity = (itemId, title) => {
+  const handleDecreaseQuantity = async (itemId, title) => {
     decreaseQuantity(itemId);
+    if (currentUser) {
+      await saveCartToFirebase(cart.map(item =>
+        item.id === itemId && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+      ));
+    }
     toast.success(t("cart.quantityUpdated", { title }), {
       ...toastConfig,
       className: "bg-green-50 text-green-700 font-medium text-sm rounded-lg",
     });
   };
 
-  // Handle clear cart
-  const handleClearCart = () => {
+  const handleClearCart = async () => {
     clearCart();
+    if (currentUser) {
+      await saveCartToFirebase([]);
+    }
     toast.success(t("cart.clearSuccess"), {
       ...toastConfig,
       className: "bg-green-50 text-green-700 font-medium text-sm rounded-lg",
     });
+  };
+
+  const handleCheckout = () => {
+    if (!currentUser) {
+      toast.error(t("cart.loginRequired"), {
+        ...toastConfig,
+        className: "bg-red-50 text-red-700 font-medium text-sm rounded-lg",
+      });
+      navigate("/login");
+      return;
+    }
+    navigate("/checkout");
   };
 
   if (cart.length === 0) {
@@ -131,7 +214,6 @@ const CartTotal = () => {
             {t("cart.clearCart")}
           </button>
         </div>
-
         <div className="grid gap-4">
           {cart.map((item) => (
             <div
@@ -154,8 +236,6 @@ const CartTotal = () => {
                   </p>
                 </div>
               </div>
-
-              {/* Quantity control */}
               <div className="flex items-center gap-2 mb-4 md:mb-0">
                 <button
                   onClick={() => handleDecreaseQuantity(item.id, item.title)}
@@ -173,8 +253,6 @@ const CartTotal = () => {
                   +
                 </button>
               </div>
-
-              {/* Narx va o'chirish */}
               <div className="flex items-center gap-4">
                 <p className="font-bold text-base sm:text-lg">
                   {(item.price * item.quantity).toLocaleString()} {t("cart.currency")}
@@ -190,13 +268,10 @@ const CartTotal = () => {
             </div>
           ))}
         </div>
-
-        {/* Chegirma ma'lumotlari va umumiy narx */}
         <div className="mt-8 bg-white p-4 sm:p-6 rounded-lg shadow-md border border-gray-100">
           <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">
             {t("cart.summaryTitle")}
           </h3>
-
           <div className="space-y-2">
             <div className="flex justify-between">
               <span>{t("cart.subtotal")}</span>
@@ -204,7 +279,6 @@ const CartTotal = () => {
                 {total.toLocaleString()} {t("cart.currency")}
               </span>
             </div>
-
             {discount.percentage > 0 && (
               <div className="flex justify-between text-green-600">
                 <span>
@@ -215,7 +289,6 @@ const CartTotal = () => {
                 </span>
               </div>
             )}
-
             <div className="border-t border-gray-200 pt-2 mt-2">
               <div className="flex justify-between text-lg font-bold">
                 <span>{t("cart.total")}</span>
@@ -225,8 +298,6 @@ const CartTotal = () => {
               </div>
             </div>
           </div>
-
-          {/* Chegirma progress bar */}
           {nextThreshold && (
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
               <h4 className="font-semibold text-blue-800 mb-2">
@@ -248,14 +319,18 @@ const CartTotal = () => {
               </p>
             </div>
           )}
-
           <button
-            onClick={() => navigate("/checkout")}
+            onClick={handleCheckout}
             className="mt-6 w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold text-base sm:text-lg"
             aria-label={t("cart.checkoutAria")}
           >
             {t("cart.checkout")}
           </button>
+          {!currentUser && (
+            <p className="text-sm text-gray-600 mt-2 text-center">
+              {t("cart.loginNotice")}
+            </p>
+          )}
         </div>
       </section>
     </div>

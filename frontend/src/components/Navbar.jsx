@@ -9,9 +9,11 @@ import cart_icon from "../assets/cart_icon.png";
 import logo4 from "../assets/logo4.png";
 import { Context } from "../context/Context";
 import { useTranslation } from "react-i18next";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 const Navbar = () => {
-  const { t, i18n } = useTranslation(); // Correctly destructure t and i18n
+  const { t, i18n } = useTranslation();
   const { count, currentUser, setCurrentUser } = useContext(Context);
   const [menuOpen, setMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -25,22 +27,11 @@ const Navbar = () => {
     const savedLang = localStorage.getItem("selectedLanguage");
     if (savedLang) {
       const { text } = JSON.parse(savedLang);
-      if (text !== i18n.language) { // Use i18n.language to check current language
-        i18n.changeLanguage(text); // Use i18n directly
+      if (text !== i18n.language) {
+        i18n.changeLanguage(text);
       }
     }
-    // Debug translations
-    console.log("Navbar translations:", {
-      home: t("home", "Home"),
-      categories: t("categories", "Categories"),
-      about: t("about", "About"),
-      contact: t("contact", "Contact"),
-      profile: t("profile", "My Profile"),
-      orders: t("orders", "Orders"),
-      logout: t("logout", "Logout"),
-      register: t("navbar.register", "Register"),
-    });
-  }, [i18n]); // Depend on i18n to ensure language changes are handled
+  }, [i18n]);
 
   const languages = [
     { img: uzb, text: "uz" },
@@ -56,10 +47,24 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  const handleLogout = () => {
-    setCurrentUser(null);
-    localStorage.removeItem("currentUser");
-    setMenuOpen(false);
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setCurrentUser(null);
+      localStorage.removeItem("currentUser");
+      setMenuOpen(false);
+      
+      toast.success(t("logout.success", "Logged out successfully"), {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error(t("logout.error", "Error during logout"), {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
   };
 
   const navLinks = [
@@ -73,11 +78,15 @@ const Navbar = () => {
     ? [
         { path: "/profile", label: t("profile", "My Profile") },
         { path: "/orders", label: t("orders", "Orders") },
-        { path: "/login", label: t("logout", "Logout"), className: "text-red-500", onClick: handleLogout },
+        { 
+          path: "/", 
+          label: t("logout", "Logout"), 
+          className: "text-red-500", 
+          onClick: handleLogout 
+        },
       ]
     : [
-        { path: "/profile", label: t("profile", "My Profile") },
-        { path: "/orders", label: t("orders", "Orders") },
+        { path: "/login", label: t("login.title", "Login") },
         { path: "/register", label: t("navbar.register", "Register"), className: "text-blue-500" },
       ];
 
@@ -117,27 +126,37 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4 md:gap-5">
           <div className="hidden md:flex items-center gap-4">
+            {/* Profile Dropdown */}
             <div className="relative group">
-              <img
-                src={profil_icon}
-                alt="profile"
-                className="w-5 cursor-pointer"
-              />
-              <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20">
-                <ul className="flex flex-col text-sm">
+              <div className="flex items-center gap-2 cursor-pointer">
+                <img
+                  src={profil_icon}
+                  alt="profile"
+                  className="w-5"
+                />
+              </div>
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20">
+                <ul className="flex flex-col text-sm py-1">
                   {profileLinks.map((link, i) => (
                     <li
                       key={i}
                       className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${link.className || ""}`}
                       onClick={link.onClick}
                     >
-                      <Link to={link.path}>{link.label}</Link>
+                      {link.onClick ? (
+                        <span className="block w-full">{link.label}</span>
+                      ) : (
+                        <Link to={link.path} className="block w-full">
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
 
+            {/* Cart Icon */}
             <Link to="/cart">
               <div className="relative cursor-pointer">
                 <img src={cart_icon} alt="cart" className="w-5" />
@@ -147,6 +166,7 @@ const Navbar = () => {
               </div>
             </Link>
 
+            {/* Language Selector */}
             <div className="relative">
               <button
                 onClick={() => setOpen(!open)}
@@ -183,7 +203,9 @@ const Navbar = () => {
             </div>
           </div>
 
+          {/* Mobile View */}
           <div className="flex md:hidden items-center gap-3">
+            {/* Cart for Mobile */}
             <Link to="/cart">
               <div className="relative cursor-pointer">
                 <img src={cart_icon} alt="cart" className="w-5" />
@@ -192,6 +214,8 @@ const Navbar = () => {
                 </span>
               </div>
             </Link>
+
+            {/* Language Selector for Mobile */}
             <button
               className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1 rounded-full cursor-pointer shadow-sm"
               onClick={() => setOpen(!open)}
@@ -204,6 +228,8 @@ const Navbar = () => {
               />
               {selected.text.toUpperCase()}
             </button>
+
+            {/* Menu Toggle */}
             <button className="text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
               {menuOpen ? <HiX /> : <HiMenu />}
             </button>
@@ -211,6 +237,7 @@ const Navbar = () => {
         </div>
       </header>
 
+      {/* Mobile Language Selector */}
       {open && (
         <div className="md:hidden bg-white border-t shadow-md py-4">
           <div className="flex justify-center gap-3">
@@ -237,9 +264,11 @@ const Navbar = () => {
         </div>
       )}
 
+      {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t shadow-md">
           <nav className="flex flex-col items-center gap-4 py-4 font-medium text-slate-700">
+            {/* Main Navigation Links */}
             {navLinks.map((link, i) => (
               <NavLink
                 key={i}
@@ -252,6 +281,20 @@ const Navbar = () => {
                 {link.label}
               </NavLink>
             ))}
+
+            {/* User Info in Mobile Menu */}
+            {currentUser && (
+              <div className="text-center border-t pt-4 mt-2 w-full">
+                <p className="text-sm text-gray-600">
+                  {t("navbar.welcome", "Welcome")},
+                </p>
+                <p className="font-medium text-gray-800 truncate max-w-xs">
+                  {currentUser.fullName || currentUser.email}
+                </p>
+              </div>
+            )}
+
+            {/* Profile Links */}
             {profileLinks.map((link, i) => (
               <NavLink
                 key={i}

@@ -229,26 +229,32 @@
     "register": "Ro‘yxatdan o‘tish"
   },
   "testimonials": {
-    "title": "Mijozlar",
-    "highlight": "sharhlari",
+    "title": "Mijozlarimiz",
+    "highlight": "Fikrlari",
     "prev": "Oldingi sharh",
     "next": "Keyingi sharh",
     "goTo": "Sharhga o'tish"
   },
   "reviewForm": {
-    "title": "Sharh qoldirishingiz mumkin!",
+    "title": "Sharh Qoldiring",
     "nameLabel": "Ismingiz",
     "namePlaceholder": "Ismingizni kiriting",
     "reviewLabel": "Sharhingiz",
-    "reviewPlaceholder": "Fikringizni yozing...",
+    "reviewPlaceholder": "Fikr va mulohazalaringizni yozing...",
+    "ratingLabel": "Baholang",
     "submit": "Yuborish",
+    "submitting": "Yuborilmoqda...",
+    "submitted": "Yuborildi",
+    "awaitingApproval": "Rahmat! Sharhingiz tasdiqlanishini kuting.",
+    "success": "Sharhingiz muvaffaqiyatli yuborildi! Tasdiqlangandan so'ng ko'rinadi.",
+    "error": "Sharh yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
     "errors": {
       "name": "Iltimos, ismingizni kiriting",
       "review": "Iltimos, sharhingizni yozing",
-      "fillAll": "Iltimos, barcha maydonlarni to‘ldiring."
-    },
-    "success": "Sharhingiz muvaffaqiyatli qabul qilindi",
-    "error": "Sharh yuborishda xatolik yuz berdi. Qayta urinib ko‘ring."
+      "reviewShort": "Sharh kamida 10 ta belgidan iborat bo'lishi kerak",
+      "rating": "Iltimos, baholashingizni belgilang",
+      "fillAll": "Iltimos, barcha maydonlarni to'g'ri to'ldiring"
+    }
   },
    "categoriesPage": {
     "all": "Barchasi",

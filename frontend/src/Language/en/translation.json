@@ -229,26 +229,31 @@
     "register": "Register"
   },
   "testimonials": {
-    "title": "Customer",
-    "highlight": "Reviews",
-    "prev": "Previous Review",
-    "next": "Next Review",
-    "goTo": "Go to Review"
+    "title": "Our Clients",
+    "highlight": "Testimonials",
+    "prev": "Previous testimonial",
+    "next": "Next testimonial",
+    "goTo": "Go to testimonial"
   },
   "reviewForm": {
-    "title": "Leave Your Review!",
+    "title": "Leave a Review",
     "nameLabel": "Your Name",
+    "ratingLabel": "Your Rating",
     "namePlaceholder": "Enter your name",
     "reviewLabel": "Your Review",
-    "reviewPlaceholder": "Write your review...",
+    "reviewPlaceholder": "Write your feedback and comments...",
     "submit": "Submit",
+    "submitting": "Submitting...",
+    "submitted": "Submitted",
+    "awaitingApproval": "Thank you! Your review is awaiting approval.",
+    "success": "Review submitted successfully! It will appear after approval.",
+    "error": "Error submitting review. Please try again.",
     "errors": {
       "name": "Please enter your name",
-      "review": "Please write your review",
-      "fillAll": "Please fill in all fields."
-    },
-    "success": "Your review was successfully submitted",
-    "error": "Error submitting review. Please try again."
+      "review": "Please enter your review",
+      "reviewShort": "Review must be at least 10 characters",
+      "fillAll": "Please fill all fields correctly"
+    }
   },
   "categoriesPage": {
     "all": "All",

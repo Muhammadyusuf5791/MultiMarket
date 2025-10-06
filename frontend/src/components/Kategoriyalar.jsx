@@ -1,11 +1,9 @@
+// Kategoriyalar.js
 import React, { useContext, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { SlBasket } from "react-icons/sl";
-import { toast } from "react-toastify";
 import Footer from "./Footer";
-import Data from "../assets/Data";
-import { Context } from "../context/Context";
-import Fuse from "fuse.js";
+import { Context } from "../context/Context"; 
 import { useTranslation } from "react-i18next";
 import { IoSearchOutline } from "react-icons/io5";
 
@@ -14,59 +12,36 @@ const Kategoriyalar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category");
   const [searchTerm, setSearchTerm] = useState("");
-  const { addToCart } = useContext(Context);
+  
+  // 🔥 Context'dan yangi products ni olish
+  const { addToCart, products = [], loading } = useContext(Context); 
 
-  // Initialize language from localStorage
   useEffect(() => {
     const savedLang = localStorage.getItem("selectedLanguage");
     const lang = savedLang ? JSON.parse(savedLang).text : "uz";
     i18n.changeLanguage(lang);
   }, [i18n]);
 
-  // ✅ Data ni CHAQIRISH kerak - bu funksiya!
-  const data = Data();
-  const allProducts = data[0].allProducts;
-
-  // Fuse settings
-  const fuse = new Fuse(allProducts, {
-    keys: ["title", "description"],
-    threshold: 0.4,
+  // Filtrlash
+  const filteredProducts = products.filter(product => {
+    const matchesCategory = !category || category === 'all' || product.category === category;
+    const matchesSearch = !searchTerm || 
+      product.title?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    return matchesCategory && matchesSearch;
   });
-
-  let filteredProducts = allProducts;
-
-  if (searchTerm) {
-    filteredProducts = fuse.search(searchTerm).map((result) => result.item);
-  }
-
-  if (category) {
-    filteredProducts = filteredProducts.filter((p) => p.category === category);
-  }
 
   const handleAddToCart = (item) => {
     addToCart(item);
-
-    let successMessage = "";
-
-    if (i18n.language === "uz") {
-      successMessage = `${item.title} savatga qo'shildi`;
-    } else if (i18n.language === "ru") {
-      successMessage = `${item.title} добавлен в корзину`;
-    } else {
-      successMessage = `${item.title} added to cart`;
-    }
-
-    toast.success(successMessage, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "light",
-      className: "font-medium text-sm",
-    });
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="text-lg">Mahsulotlar yuklanmoqda...</div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -79,7 +54,7 @@ const Kategoriyalar = () => {
                 !category
                   ? "bg-blue-600 text-white shadow-md"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              }`}
             >
               {t("categoriesPage.all")}
             </button>
@@ -89,7 +64,7 @@ const Kategoriyalar = () => {
                 category === "elektr"
                   ? "bg-blue-600 text-white shadow-md"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              }`}
             >
               {t("categoriesPage.electrical")}
             </button>
@@ -99,13 +74,12 @@ const Kategoriyalar = () => {
                 category === "santexnika"
                   ? "bg-blue-600 text-white shadow-md"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              }`}
             >
               {t("categoriesPage.plumbing")}
             </button>
           </div>
 
-          {/* Search input with icon */}
           <div className="relative w-full md:w-64">
             <input
               type="text"
@@ -136,14 +110,12 @@ const Kategoriyalar = () => {
                   />
                 </div>
                 
-                {/* Title qismi - fixed height bilan */}
                 <div className="min-h-[60px] max-h-[60px] overflow-hidden p-2.5 sm:p-3">
                   <h1 className="text-base sm:text-lg font-semibold line-clamp-2 leading-tight">
                     {item.title}
                   </h1>
                 </div>
                 
-                {/* Narx va button - fixed joy */}
                 <div className="mt-auto p-2.5 sm:p-3">
                   <p className="font-bold text-blue-500 text-lg sm:text-xl mb-3">
                     {item.price} {t("categoriesPage.currency")}
@@ -163,9 +135,13 @@ const Kategoriyalar = () => {
               </div>
             ))
           ) : (
-            <p className="col-span-full text-center text-gray-500 text-sm sm:text-base">
-              {t("categoriesPage.noResults")}
-            </p>
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-500 text-lg">
+                {searchTerm || category 
+                  ? t("categoriesPage.noResults") 
+                  : 'Hozircha mahsulotlar mavjud emas'}
+              </p>
+            </div>
           )}
         </div>
       </section>
